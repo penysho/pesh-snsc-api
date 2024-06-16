@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  post-app:
+    build:
+      context: ./post-app
+      dockerfile: ../docker/app/Dockerfile
+    container_name: pesh-snsc-api_post-app
+    volumes:
+      - .:/go/src
+    ports:
+      - "8081:8081"
+    tty: true

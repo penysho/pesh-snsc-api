@@ -2,12 +2,17 @@ package main
 
 import (
 	"log"
-	"post-app/router"
+	"net/http"
+	"post-app/infrastructure/router"
 )
 
 func main() {
-	router := router.SetRouter()
-	if err := router.Run(":8081"); err != nil {
-		log.Fatal(err)
+	r := router.NewGinRouter()
+
+	s := &http.Server{
+		Handler: r,
+		Addr:    "0.0.0.0:8081",
 	}
+
+	log.Fatal(s.ListenAndServe())
 }

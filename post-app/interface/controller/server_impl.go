@@ -1,7 +1,7 @@
 package controller
 
 import (
-	postRepoImpl "post-app/infrastructure/repository/post"
+	postRepoImpl "post-app/infrastructure/db/repository/post"
 	postInteractor "post-app/usecase/interactor/post"
 )
 

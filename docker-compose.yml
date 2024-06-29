@@ -11,3 +11,9 @@ services:
     ports:
       - "8081:8081"
     tty: true
+
+networks:
+  default:
+    name: pesh-snsc_default
+    external: true
+

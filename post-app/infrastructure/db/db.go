@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"database/sql"
 )
 
@@ -26,7 +27,7 @@ func NewDBManeger(db DB) (*DBManeger, error) {
 	}, nil
 }
 
-func (m *DBManeger) GetConnection() *sql.DB {
+func (m *DBManeger) GetPool() *sql.DB {
 	return m.pool
 }
 
@@ -42,8 +43,32 @@ type DBTxManeger struct {
 	tx *sql.Tx
 }
 
-func NewDBTxManeger(dbManeger *DBManeger) (*DBTxManeger, error) {
-	transaction, err := dbManeger.GetConnection().Begin()
+func NewDBTxManeger(
+	dbManeger *DBManeger,
+	ctx context.Context,
+	txOptions sql.TxOptions,
+) (*DBTxManeger, error) {
+	transaction, err := dbManeger.GetPool().BeginTx(
+		ctx,
+		&txOptions,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &DBTxManeger{
+		tx: transaction,
+	}, nil
+}
+
+func NewDBTxManegerWithPool(
+	pool *sql.DB,
+	ctx context.Context,
+	txOptions sql.TxOptions,
+) (*DBTxManeger, error) {
+	transaction, err := pool.BeginTx(
+		ctx,
+		&txOptions,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -61,9 +86,5 @@ func (tm *DBTxManeger) CommitTx() error {
 }
 
 func (tm *DBTxManeger) RollbackTx() error {
-	return tm.tx.Rollback()
-}
-
-func (tm *DBTxManeger) CloseTx() error {
 	return tm.tx.Rollback()
 }

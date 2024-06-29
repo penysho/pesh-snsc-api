@@ -22,8 +22,8 @@ func NewPostPresenter(c *gin.Context) PostPresenter {
 	}
 }
 
-func (pp *postPresenterImpl) PresentGetPost(post *post.Post) error {
-	pp.context.JSON(http.StatusOK, &server.GetPostResponse{
+func (p *postPresenterImpl) PresentGetPost(post *post.Post) error {
+	p.context.JSON(http.StatusOK, &server.GetPostResponse{
 		Post: server.Post{
 			Id:            post.GetId(),
 			Title:         post.GetTitle(),

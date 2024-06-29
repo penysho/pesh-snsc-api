@@ -9,17 +9,20 @@ import (
 )
 
 type postRepositoryImpl struct {
-	ctx context.Context
-	tx  *sql.Tx
+	ctx  context.Context
+	pool *sql.DB
+	tx   *sql.Tx
 }
 
-func NewPostRepositoryImpl(
+func NewPostRepository(
 	ctx context.Context,
+	pool *sql.DB,
 	tx *sql.Tx,
 ) postRepo.PostRepository {
 	return &postRepositoryImpl{
-		ctx: ctx,
-		tx:  tx,
+		ctx:  ctx,
+		pool: pool,
+		tx:   tx,
 	}
 }
 

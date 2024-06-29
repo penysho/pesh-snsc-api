@@ -7,16 +7,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type PostInteractor struct {
+type PostInteractor interface {
+	GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) error
+}
+
+type postInteractorImpl struct {
 	repository postRepo.PostRepository
 }
 
-func NewPostInteractor(postRepo postRepo.PostRepository) *PostInteractor {
-	return &PostInteractor{repository: postRepo}
+func NewPostInteractor(postRepo postRepo.PostRepository) PostInteractor {
+	return &postInteractorImpl{repository: postRepo}
 }
 
-func (s *PostInteractor) GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) error {
-	post, err := s.repository.FindByID(id)
+func (i *postInteractorImpl) GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) error {
+	post, err := i.repository.FindByID(id)
 	if err != nil {
 		return err
 	}

@@ -2,7 +2,7 @@ package presenter
 
 import (
 	"net/http"
-	server "post-app/apidef/generated"
+	"post-app/apidef/generated/server"
 	domainError "post-app/entity/error"
 	"post-app/entity/post"
 

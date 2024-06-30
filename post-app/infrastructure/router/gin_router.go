@@ -1,7 +1,7 @@
 package router
 
 import (
-	server "post-app/apidef/generated"
+	"post-app/apidef/generated/server"
 	"post-app/infrastructure/db"
 	"post-app/infrastructure/module"
 	"post-app/interface/controller"

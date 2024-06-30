@@ -12,6 +12,11 @@ import (
 	"github.com/oapi-codegen/runtime"
 )
 
+// DomainError エラーレスポンス
+type DomainError struct {
+	Errors string `json:"errors"`
+}
+
 // GetPostResponse 投稿詳細レスポンス
 type GetPostResponse struct {
 	// Post 投稿情報

@@ -28,16 +28,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetPostResponse"
-        "500":
-          description: 失敗時レスポンス
+        "400":
+          description: 400番台エラーレスポンス
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: string
-                    example: "Internal Server Error"
+                $ref: "#/components/schemas/DomainError"
+        "500":
+          description: 500番台エラーレスポンス
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DomainError"
 
 components:
   schemas:
@@ -91,3 +93,13 @@ components:
       properties:
         post:
           $ref: "#/components/schemas/Post"
+
+    DomainError:
+      type: object
+      description: エラーレスポンス
+      required:
+        - errors
+      properties:
+        errors:
+          type: string
+          example: "Error Messages"

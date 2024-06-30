@@ -3,6 +3,7 @@ package post
 import (
 	"context"
 	"database/sql"
+	domainError "post-app/entity/error"
 	"post-app/entity/post"
 	"post-app/infrastructure/db/repository/models"
 	"post-app/infrastructure/logger"
@@ -32,8 +33,8 @@ func (r *postRepositoryImpl) FindByID(id int) (*post.Post, error) {
 		models.PostWhere.ID.EQ(int64(id)),
 	).One(r.ctx, r.tx)
 	if err != nil {
-		logger.Error("投稿情報の取得に失敗しました", "id", id)
-		return nil, err
+		logger.Error("投稿情報が見つかりません", "id", id)
+		return nil, domainError.NotFound
 	}
 
 	return post.NewPost(

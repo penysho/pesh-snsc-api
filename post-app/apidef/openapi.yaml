@@ -35,7 +35,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  message:
+                  errors:
                     type: string
                     example: "Internal Server Error"
 

@@ -8,7 +8,7 @@ import (
 )
 
 type PostInteractor interface {
-	GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) error
+	GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter)
 }
 
 type postInteractorImpl struct {
@@ -19,10 +19,11 @@ func NewPostInteractor(postRepo postRepo.PostRepository) PostInteractor {
 	return &postInteractorImpl{repository: postRepo}
 }
 
-func (i *postInteractorImpl) GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) error {
+func (i *postInteractorImpl) GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) {
 	post, err := i.repository.FindByID(id)
 	if err != nil {
-		return err
+		outputBoundary.ErrorResponse(err)
+		return
 	}
-	return outputBoundary.PresentGetPost(post)
+	outputBoundary.PresentGetPost(post)
 }

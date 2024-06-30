@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"post-app/entity/post"
 	"post-app/infrastructure/db/repository/models"
+	"post-app/infrastructure/logger"
 	postRepo "post-app/usecase/repository/post"
 )
 
@@ -31,6 +32,7 @@ func (r *postRepositoryImpl) FindByID(id int) (*post.Post, error) {
 		models.PostWhere.ID.EQ(int64(id)),
 	).One(r.ctx, r.tx)
 	if err != nil {
+		logger.Error("投稿情報の取得に失敗しました", "id", id)
 		return nil, err
 	}
 

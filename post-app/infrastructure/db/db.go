@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"post-app/infrastructure/logger"
 )
 
 type DB interface {
@@ -20,6 +21,7 @@ type DBManeger struct {
 func NewDBManeger(db DB) (*DBManeger, error) {
 	pool, err := db.InitDB()
 	if err != nil {
+		logger.Error("DBの初期化に失敗しました", "err", err)
 		return nil, err
 	}
 	return &DBManeger{
@@ -35,7 +37,6 @@ func (m *DBManeger) Close() error {
 	if m.pool != nil {
 		return m.pool.Close()
 	}
-
 	return nil
 }
 
@@ -65,11 +66,23 @@ func NewDBTxManegerWithPool(
 	ctx context.Context,
 	txOptions sql.TxOptions,
 ) (*DBTxManeger, error) {
+	logger.Info(
+		"DBのトランザクションを開始します",
+		"MaxOpenConnections",
+		pool.Stats().MaxOpenConnections,
+		"OpenConnections",
+		pool.Stats().OpenConnections,
+		"InUse",
+		pool.Stats().InUse,
+		"Idle",
+		pool.Stats().Idle,
+	)
 	transaction, err := pool.BeginTx(
 		ctx,
 		&txOptions,
 	)
 	if err != nil {
+		logger.Error("DBのトランザクションの開始に失敗しました", "err", err)
 		return nil, err
 	}
 	return &DBTxManeger{

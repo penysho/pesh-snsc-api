@@ -3,19 +3,21 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"post-app/infrastructure/db"
+
 	"post-app/infrastructure/router"
 )
 
 func main() {
 	database, err := db.NewDB()
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	dbManeger, err := db.NewDBManeger(database)
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 	defer dbManeger.Close()
 

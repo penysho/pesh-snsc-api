@@ -1,4 +1,4 @@
-openapi: "3.0.3"
+openapi: 3.0.3
 info:
   version: 0.0.1
   title: post-app
@@ -22,24 +22,24 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
+        '200':
           description: 成功時レスポンス
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetPostResponse"
-        "400":
+                $ref: '#/components/schemas/GetPostResponse'
+        '400':
           description: 400番台エラーレスポンス
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DomainError"
-        "500":
+                $ref: '#/components/schemas/DomainError'
+        '500':
           description: 500番台エラーレスポンス
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DomainError"
+                $ref: '#/components/schemas/DomainError'
 
 components:
   schemas:
@@ -82,7 +82,7 @@ components:
         postedAt:
           type: string
           description: 投稿日時
-          example: "2020-01-31T23:59:59+09:00"
+          example: '2020-01-31T23:59:59+09:00'
           format: date-time
 
     GetPostResponse:
@@ -92,7 +92,7 @@ components:
         - post
       properties:
         post:
-          $ref: "#/components/schemas/Post"
+          $ref: '#/components/schemas/Post'
 
     DomainError:
       type: object
@@ -102,4 +102,4 @@ components:
       properties:
         errors:
           type: string
-          example: "Error Messages"
+          example: Error Messages

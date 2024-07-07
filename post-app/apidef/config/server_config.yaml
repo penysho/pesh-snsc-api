@@ -3,5 +3,6 @@ output: ./generated/server/server.gen.go
 generate:
   gin-server: true
   models: true
+# https://github.com/oapi-codegen/oapi-codegen?tab=readme-ov-file#generating-api-models
 output-options:
   skip-prune: true

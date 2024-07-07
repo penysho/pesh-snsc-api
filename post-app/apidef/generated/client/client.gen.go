@@ -218,10 +218,10 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// GetPostWithResponse request
-	GetPostWithResponse(ctx context.Context, postId int, reqEditors ...RequestEditorFn) (*GetPostResponse, error)
+	GetPostWithResponse(ctx context.Context, postId int, reqEditors ...RequestEditorFn) (*GetPostClientResponse, error)
 }
 
-type GetPostResponse struct {
+type GetPostClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *GetPostResponse
@@ -230,7 +230,7 @@ type GetPostResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r GetPostResponse) Status() string {
+func (r GetPostClientResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -238,31 +238,31 @@ func (r GetPostResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetPostResponse) StatusCode() int {
+func (r GetPostClientResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-// GetPostWithResponse request returning *GetPostResponse
-func (c *ClientWithResponses) GetPostWithResponse(ctx context.Context, postId int, reqEditors ...RequestEditorFn) (*GetPostResponse, error) {
+// GetPostWithResponse request returning *GetPostClientResponse
+func (c *ClientWithResponses) GetPostWithResponse(ctx context.Context, postId int, reqEditors ...RequestEditorFn) (*GetPostClientResponse, error) {
 	rsp, err := c.GetPost(ctx, postId, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetPostResponse(rsp)
+	return ParseGetPostClientResponse(rsp)
 }
 
-// ParseGetPostResponse parses an HTTP response from a GetPostWithResponse call
-func ParseGetPostResponse(rsp *http.Response) (*GetPostResponse, error) {
+// ParseGetPostClientResponse parses an HTTP response from a GetPostWithResponse call
+func ParseGetPostClientResponse(rsp *http.Response) (*GetPostClientResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetPostResponse{
+	response := &GetPostClientResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}

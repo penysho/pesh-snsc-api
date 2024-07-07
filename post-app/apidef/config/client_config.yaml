@@ -3,3 +3,6 @@ output: ./generated/client/client.gen.go
 generate:
   models: true
   client: true
+# https://pkg.go.dev/github.com/oapi-codegen/oapi-codegen/v2/pkg/codegen#OutputOptions
+output-options:
+  response-type-suffix: ClientResponse

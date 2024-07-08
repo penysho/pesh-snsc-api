@@ -97,6 +97,7 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.formatOnSave": true
   },
+
   // https://github.com/golang/vscode-go/blob/master/docs/settings.md
   "[go]": {
     "editor.defaultFormatter": "golang.go",

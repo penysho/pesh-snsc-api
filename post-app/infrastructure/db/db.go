@@ -3,11 +3,12 @@ package db
 import (
 	"context"
 	"database/sql"
+	"post-app/infrastructure/config"
 	"post-app/infrastructure/logger"
 )
 
 type DB interface {
-	InitDB() (*sql.DB, error)
+	InitDB(dbConfig *config.DBConfig) (*sql.DB, error)
 }
 
 func NewDB() (DB, error) {
@@ -18,8 +19,8 @@ type DBManeger struct {
 	pool *sql.DB
 }
 
-func NewDBManeger(db DB) (*DBManeger, error) {
-	pool, err := db.InitDB()
+func NewDBManeger(db DB, dbConfig *config.DBConfig) (*DBManeger, error) {
+	pool, err := db.InitDB(dbConfig)
 	if err != nil {
 		logger.Error("DBの初期化に失敗しました", "err", err)
 		return nil, err

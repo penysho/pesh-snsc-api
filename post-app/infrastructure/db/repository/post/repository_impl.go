@@ -2,12 +2,13 @@ package post
 
 import (
 	"context"
-	domainError "post-app/entity/error"
-	"post-app/entity/post"
-	"post-app/infrastructure/db"
-	"post-app/infrastructure/db/repository/models"
-	"post-app/infrastructure/logger"
-	postRepo "post-app/usecase/repository/post"
+
+	domainError "github.com/penysho/pesh-snsc-api/post-app/entity/error"
+	"github.com/penysho/pesh-snsc-api/post-app/entity/post"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db/repository/models"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/logger"
+	postRepo "github.com/penysho/pesh-snsc-api/post-app/usecase/repository/post"
 )
 
 type postRepositoryImpl struct {

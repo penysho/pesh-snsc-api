@@ -2,11 +2,12 @@ package presenter
 
 import (
 	"net/http"
-	"post-app/apidef/generated/server"
-	domainError "post-app/entity/error"
-	"post-app/entity/post"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/penysho/pesh-snsc-api/post-app/apidef/generated/server"
+	domainError "github.com/penysho/pesh-snsc-api/post-app/entity/error"
+	"github.com/penysho/pesh-snsc-api/post-app/entity/post"
 )
 
 //go:generate mockgen -source=get_post.go -destination=mock/get_post_mock.go -package=presenter_mock

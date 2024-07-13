@@ -1,8 +1,8 @@
 package module
 
 import (
-	"post-app/interface/controller"
-	postInteractor "post-app/usecase/interactor/post"
+	"github.com/penysho/pesh-snsc-api/post-app/interface/controller"
+	postInteractor "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post"
 
 	"github.com/gin-gonic/gin"
 )

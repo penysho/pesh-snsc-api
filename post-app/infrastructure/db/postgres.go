@@ -4,9 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"post-app/infrastructure/config"
 	"strconv"
 	"time"
+
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/config"
 
 	_ "github.com/lib/pq"
 	"github.com/volatiletech/sqlboiler/v4/boil"

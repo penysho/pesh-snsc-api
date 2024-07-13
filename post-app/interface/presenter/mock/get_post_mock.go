@@ -10,9 +10,9 @@
 package presenter_mock
 
 import (
-	post "post-app/entity/post"
 	reflect "reflect"
 
+	post "github.com/penysho/pesh-snsc-api/post-app/entity/post"
 	gomock "go.uber.org/mock/gomock"
 )
 

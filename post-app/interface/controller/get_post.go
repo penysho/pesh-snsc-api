@@ -1,9 +1,8 @@
 package controller
 
 import (
-	"post-app/interface/presenter"
-
 	"github.com/gin-gonic/gin"
+	"github.com/penysho/pesh-snsc-api/post-app/interface/presenter"
 )
 
 // GetPost 投稿詳細情報の取得

@@ -1,11 +1,11 @@
 package router
 
 import (
-	"post-app/apidef/generated/server"
-	"post-app/infrastructure/db"
-	"post-app/infrastructure/db/middleware"
-	"post-app/infrastructure/module"
-	"post-app/interface/controller"
+	"github.com/penysho/pesh-snsc-api/post-app/apidef/generated/server"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db/middleware"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/module"
+	"github.com/penysho/pesh-snsc-api/post-app/interface/controller"
 
 	"github.com/gin-gonic/gin"
 )

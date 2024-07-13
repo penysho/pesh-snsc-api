@@ -10,10 +10,10 @@
 package controller_mock
 
 import (
-	interactor "post-app/usecase/interactor/post"
 	reflect "reflect"
 
 	gin "github.com/gin-gonic/gin"
+	interactor "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post"
 	gomock "go.uber.org/mock/gomock"
 )
 

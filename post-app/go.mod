@@ -1,4 +1,4 @@
-module post-app
+module github.com/penysho/pesh-snsc-api/post-app
 
 go 1.22.2
 

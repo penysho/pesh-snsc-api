@@ -3,8 +3,9 @@ package db
 import (
 	"context"
 	"database/sql"
-	"post-app/infrastructure/config"
-	"post-app/infrastructure/logger"
+
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/config"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/logger"
 )
 
 type DB interface {

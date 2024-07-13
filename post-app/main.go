@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"post-app/infrastructure/config"
-	"post-app/infrastructure/db"
 	"strconv"
 
-	"post-app/infrastructure/router"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/config"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/router"
 )
 
 func main() {

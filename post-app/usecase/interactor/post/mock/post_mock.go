@@ -10,10 +10,10 @@
 package interactor_mock
 
 import (
-	presenter "post-app/interface/presenter"
 	reflect "reflect"
 
 	gin "github.com/gin-gonic/gin"
+	presenter "github.com/penysho/pesh-snsc-api/post-app/interface/presenter"
 	gomock "go.uber.org/mock/gomock"
 )
 

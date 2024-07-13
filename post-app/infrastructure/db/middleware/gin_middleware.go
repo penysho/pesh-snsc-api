@@ -4,10 +4,10 @@ import (
 	"database/sql"
 	"net/http"
 
-	"post-app/infrastructure/db"
-	postRepo "post-app/infrastructure/db/repository/post"
-	"post-app/infrastructure/logger"
-	postInteractor "post-app/usecase/interactor/post"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db"
+	postRepo "github.com/penysho/pesh-snsc-api/post-app/infrastructure/db/repository/post"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/logger"
+	postInteractor "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post"
 
 	"github.com/gin-gonic/gin"
 )

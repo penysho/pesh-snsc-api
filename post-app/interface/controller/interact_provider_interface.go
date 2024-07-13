@@ -1,7 +1,7 @@
 package controller
 
 import (
-	postInteractor "post-app/usecase/interactor/post"
+	postInteractor "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post"
 
 	"github.com/gin-gonic/gin"
 )

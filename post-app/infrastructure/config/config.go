@@ -1,7 +1,7 @@
 package config
 
 import (
-	"post-app/infrastructure/logger"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/logger"
 
 	"github.com/caarlos0/env/v11"
 )

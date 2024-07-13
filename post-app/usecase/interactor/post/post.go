@@ -1,10 +1,10 @@
 package interactor
 
 import (
-	"post-app/interface/presenter"
-	postRepo "post-app/usecase/repository/post"
+	postRepo "github.com/penysho/pesh-snsc-api/post-app/usecase/repository/post"
 
 	"github.com/gin-gonic/gin"
+	"github.com/penysho/pesh-snsc-api/post-app/interface/presenter"
 )
 
 //go:generate mockgen -source=post.go -destination=mock/post_mock.go -package=interactor_mock

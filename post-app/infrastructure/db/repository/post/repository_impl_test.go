@@ -3,13 +3,14 @@ package post_test
 import (
 	"context"
 	"database/sql"
-	"post-app/entity/post"
-	"post-app/infrastructure/config"
-	"post-app/infrastructure/db"
-	"post-app/infrastructure/db/repository/models"
-	postRepoImpl "post-app/infrastructure/db/repository/post"
 	"testing"
 	"time"
+
+	"github.com/penysho/pesh-snsc-api/post-app/entity/post"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/config"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db"
+	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db/repository/models"
+	postRepoImpl "github.com/penysho/pesh-snsc-api/post-app/infrastructure/db/repository/post"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/null/v8"

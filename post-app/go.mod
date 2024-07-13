@@ -6,13 +6,13 @@ require (
 	github.com/caarlos0/env/v11 v11.1.0
 	github.com/friendsofgo/errors v0.9.2
 	github.com/gin-gonic/gin v1.10.0
-	github.com/golang/mock v1.6.0
 	github.com/lib/pq v1.10.6
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/stretchr/testify v1.9.0
 	github.com/volatiletech/null/v8 v8.1.2
 	github.com/volatiletech/sqlboiler/v4 v4.16.2
 	github.com/volatiletech/strmangle v0.0.6
+	go.uber.org/mock v0.4.0
 )
 
 require (

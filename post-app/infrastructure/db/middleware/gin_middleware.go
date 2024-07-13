@@ -1,9 +1,10 @@
-package db
+package middleware
 
 import (
 	"database/sql"
 	"net/http"
 
+	"post-app/infrastructure/db"
 	postRepo "post-app/infrastructure/db/repository/post"
 	"post-app/infrastructure/logger"
 	postInteractor "post-app/usecase/interactor/post"
@@ -11,10 +12,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func DBTxMiddleware(dbManeger *DBManeger) gin.HandlerFunc {
+func DBTxMiddleware(dbManeger *db.DBManeger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		pool := dbManeger.GetPool()
-		dbTxManeger, err := NewDBTxManegerWithPool(
+		dbTxManeger, err := db.NewDBTxManegerWithPool(
 			pool,
 			c,
 			sql.TxOptions{},
@@ -24,7 +25,6 @@ func DBTxMiddleware(dbManeger *DBManeger) gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		tx := dbTxManeger.GetTx()
 
 		defer func() {
 			if p := recover(); p != nil {
@@ -45,7 +45,7 @@ func DBTxMiddleware(dbManeger *DBManeger) gin.HandlerFunc {
 			}
 		}()
 
-		postRepo := postRepo.NewPostRepository(c, pool, tx)
+		postRepo := postRepo.NewPostRepository(c, dbManeger, dbTxManeger)
 		postInteractor := postInteractor.NewPostInteractor(postRepo)
 		c.Set("postInteractor", postInteractor)
 		c.Next()

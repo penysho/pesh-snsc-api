@@ -6,6 +6,7 @@ require (
 	github.com/caarlos0/env/v11 v11.1.0
 	github.com/friendsofgo/errors v0.9.2
 	github.com/gin-gonic/gin v1.10.0
+	github.com/golang/mock v1.6.0
 	github.com/lib/pq v1.10.6
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/stretchr/testify v1.9.0

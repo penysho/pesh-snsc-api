@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//go:generate mockgen -source=post.go -destination=mock/post_mock.go -package=interactor_mock
 type PostInteractor interface {
 	GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter)
 }

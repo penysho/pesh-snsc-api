@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//go:generate mockgen -source=get_post.go -destination=mock/get_post_mock.go -package=presenter_mock
 type PostPresenter interface {
 	PresentGetPost(post *post.Post)
 	ErrorResponse(err error)

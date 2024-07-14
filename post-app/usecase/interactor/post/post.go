@@ -20,6 +20,7 @@ func NewPostInteractor(postRepo postRepo.PostRepository) PostInteractor {
 	return &postInteractorImpl{repository: postRepo}
 }
 
+// GetPost 投稿情報取得してレスポンスする処理を操作する
 func (i *postInteractorImpl) GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) {
 	post, err := i.repository.FindByID(id)
 	if err != nil {

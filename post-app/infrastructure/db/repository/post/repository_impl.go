@@ -29,6 +29,7 @@ func NewPostRepository(
 	}
 }
 
+// FindByID IDで投稿情報を取得する
 func (r *postRepositoryImpl) FindByID(id int) (*post.Post, error) {
 	tran := r.dbTxManeger.GetTx()
 

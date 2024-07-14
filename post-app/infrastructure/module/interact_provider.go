@@ -13,6 +13,7 @@ func NewInteractProvider() controller.InteractProvider {
 	return &interactProviderImpl{}
 }
 
+// ProvidePostInteractor PostInteractorを提供する
 func (p *interactProviderImpl) ProvidePostInteractor(c *gin.Context) postInteractor.PostInteractor {
 	return c.MustGet("postInteractor").(postInteractor.PostInteractor)
 }

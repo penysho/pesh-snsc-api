@@ -26,6 +26,7 @@ func NewPostPresenter(c *gin.Context) PostPresenter {
 	}
 }
 
+// PresentGetPost 成功レスポンスを返却する
 func (p *postPresenterImpl) PresentGetPost(post *post.Post) {
 	p.context.JSON(http.StatusOK, &server.GetPostResponse{
 		Post: server.Post{
@@ -40,6 +41,7 @@ func (p *postPresenterImpl) PresentGetPost(post *post.Post) {
 	})
 }
 
+// ErrorResponse エラーレスポンスを返却する
 func (p *postPresenterImpl) ErrorResponse(err error) {
 	var status int
 	var message string

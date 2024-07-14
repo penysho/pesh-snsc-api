@@ -20,6 +20,7 @@ type DBManeger struct {
 	pool *sql.DB
 }
 
+// NewDBManeger DBのコネクションマネージャーのコンストラクタ
 func NewDBManeger(db DB, dbConfig *config.DBConfig) (*DBManeger, error) {
 	pool, err := db.InitDB(dbConfig)
 	if err != nil {
@@ -31,10 +32,12 @@ func NewDBManeger(db DB, dbConfig *config.DBConfig) (*DBManeger, error) {
 	}, nil
 }
 
+// GetPool コネクションマネージャーからコネクションプールを取得する
 func (m *DBManeger) GetPool() *sql.DB {
 	return m.pool
 }
 
+// Close コネクションマネージャーのコネクションプールを閉じる
 func (m *DBManeger) Close() error {
 	if m.pool != nil {
 		return m.pool.Close()
@@ -46,6 +49,7 @@ type DBTxManeger struct {
 	tx *sql.Tx
 }
 
+// NewDBTxManeger DBのコネクションマネージャーを用いたトランザクションマネージャーのコンストラクタ
 func NewDBTxManeger(
 	dbManeger *DBManeger,
 	ctx context.Context,
@@ -63,6 +67,7 @@ func NewDBTxManeger(
 	}, nil
 }
 
+// NewDBTxManegerWithPool DBのコネクションプールを用いたトランザクションマネージャーのコンストラクタ
 func NewDBTxManegerWithPool(
 	pool *sql.DB,
 	ctx context.Context,
@@ -92,14 +97,17 @@ func NewDBTxManegerWithPool(
 	}, nil
 }
 
+// GetTx トランザクションマネージャーからトランザクションを取得する
 func (tm *DBTxManeger) GetTx() *sql.Tx {
 	return tm.tx
 }
 
+// CommitTx トランザクションマネージャーのトランザクションをコミットする
 func (tm *DBTxManeger) CommitTx() error {
 	return tm.tx.Commit()
 }
 
+// RollbackTx トランザクションマネージャーのトランザクションをロールバックする
 func (tm *DBTxManeger) RollbackTx() error {
 	return tm.tx.Rollback()
 }

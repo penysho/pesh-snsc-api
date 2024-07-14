@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// NewGinRouter Ginのルーターを定義する
 func NewGinRouter(dbManeger *db.DBManeger) *gin.Engine {
 	r := gin.New()
 

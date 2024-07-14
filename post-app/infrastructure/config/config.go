@@ -46,6 +46,7 @@ type DBConfig struct {
 	ConnectionMaxIdletime uint `env:"CONNECTION_MAX_IDLE_TIME" envDefault:"300"`
 }
 
+// NewAppConfig アプリケーション設定を読み込むコンストラタ
 func NewAppConfig() (*AppConfig, error) {
 	cfg := Config{}
 	if err := env.Parse(&cfg); err != nil {
@@ -55,6 +56,7 @@ func NewAppConfig() (*AppConfig, error) {
 	return &cfg.App, nil
 }
 
+// NewDBConfig DB設定を読み込むコンストラクタ
 func NewDBConfig() (*DBConfig, error) {
 	cfg := Config{}
 	if err := env.Parse(&cfg); err != nil {

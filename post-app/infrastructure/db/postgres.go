@@ -16,6 +16,7 @@ import (
 type PostgresDB struct {
 }
 
+// InitDB DB接続を初期化する
 func (p *PostgresDB) InitDB(dbConfig *config.DBConfig) (*sql.DB, error) {
 
 	sslMode := "disable"

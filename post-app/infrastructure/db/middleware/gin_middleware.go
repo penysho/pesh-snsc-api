@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// DBTxMiddleware リクエスト毎にトランザクションマネージャーを生成してInteractorを定義する
 func DBTxMiddleware(dbManeger *db.DBManeger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		pool := dbManeger.GetPool()

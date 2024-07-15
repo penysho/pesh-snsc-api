@@ -4,7 +4,7 @@ services:
   post-app:
     build:
       context: ./post-app
-      dockerfile: ../docker/app/Dockerfile
+      dockerfile: ../docker/app/Dockerfile.local
     container_name: pesh-snsc-api_post-app
     volumes:
       - .:/go/src
@@ -12,7 +12,7 @@ services:
       - "8081:8081"
     tty: true
     env_file:
-      - "./post-app/.env"
+      - "./post-app/.env.local.compose"
 
 networks:
   default:

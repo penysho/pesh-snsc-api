@@ -1,0 +1,34 @@
+FROM golang:1.22.2-bookworm as builder
+
+CMD ["/bin/bash", "-b"]
+
+ENV GOPATH=/go
+
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /go/src/post-app
+
+COPY ./post-app .
+RUN go mod download && go build -o main main.go
+
+FROM debian:bookworm-slim as develop
+
+WORKDIR /app
+
+COPY --from=builder /go/src/post-app/main .
+
+RUN groupadd --system --gid 1000 snsc_api_post-app \
+    && useradd --no-log-init --system -u 1000 --gid snsc_api_post-app --create-home snsc_api_post-app
+USER snsc_api_post-app
+
+EXPOSE 8181
+
+
+
+
+
+
+

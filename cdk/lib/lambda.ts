@@ -33,9 +33,19 @@ export class PostApp extends Stack {
     const fn = new lambda.Function(this, "lambdaApp", {
       functionName: `${props.projectName}-${props.appName}-${props.deployEnvironment}`,
       runtime: lambda.Runtime.PROVIDED_AL2023,
-      handler: `${props.appName}.main`,
+      handler: `${props.appName}/cmd/aws/lambda/apigw.main`,
       code: lambda.Code.fromAsset(
-        path.join(__dirname, `../../${props.appName}`)
+        path.join(__dirname, `../../../pesh-snsc-api`),
+        {
+          exclude: [
+            ".git",
+            ".vscode",
+            "cdk",
+            "docker",
+            "docker-compose.yml",
+            "staticcheck.conf",
+          ],
+        }
       ),
     });
   }

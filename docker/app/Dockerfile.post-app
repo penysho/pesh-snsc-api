@@ -12,7 +12,7 @@ RUN apt-get update && apt-get upgrade -y \
 WORKDIR /go/src/post-app
 
 COPY ./post-app .
-RUN go mod download && go build -o main main.go
+RUN go mod download && go build -o main ./cmd/container/api/main.go
 
 FROM debian:bookworm-slim as develop
 
@@ -25,7 +25,6 @@ RUN groupadd --system --gid 1000 snsc_api_post-app \
 USER snsc_api_post-app
 
 EXPOSE 8181
-
 
 
 

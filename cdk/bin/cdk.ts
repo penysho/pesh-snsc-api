@@ -6,13 +6,13 @@ import { PostApp } from "../lib/lambda";
 
 const app = new cdk.App();
 
-const projectName: string = "pesh-snce-api";
+const projectName: string = "pesh-snsc-api";
 const appName: string = "post-app";
 const deployEnvironment = process.env.DEPLOY_ENV
   ? process.env.DEPLOY_ENV
   : "tst";
 
-new PostApp(app, `pesh-snsc-api-post-app-${deployEnvironment}`, {
+new PostApp(app, `${projectName}-${appName}-${deployEnvironment}`, {
   projectName: projectName,
   appName: appName,
   deployEnvironment: deployEnvironment,

@@ -3,6 +3,8 @@ module github.com/penysho/pesh-snsc-api/post-app
 go 1.22.2
 
 require (
+	github.com/aws/aws-lambda-go v1.47.0
+	github.com/awslabs/aws-lambda-go-api-proxy v0.16.2
 	github.com/caarlos0/env/v11 v11.1.0
 	github.com/friendsofgo/errors v0.9.2
 	github.com/gin-gonic/gin v1.10.0

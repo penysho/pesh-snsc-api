@@ -6,7 +6,7 @@ import (
 )
 
 // GetPost 投稿詳細情報の取得
-// (GET /post/{postId})
+// (GET /post-app/post/{postId})
 func (s *Server) GetPost(c *gin.Context, postId int) {
 	postInteractor := s.InteractProvider.ProvidePostInteractor(c)
 	presenter := presenter.NewPostPresenter(c)

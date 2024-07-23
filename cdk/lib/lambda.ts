@@ -1,6 +1,7 @@
 import {
   Duration,
   Fn,
+  SecretValue,
   Stack,
   StackProps,
   aws_apigateway as apigw,
@@ -77,6 +78,33 @@ export class PostApp extends Stack {
       vpc: vpc,
       securityGroups: [lambdaSecurityGroup],
       handler: "bootstrap",
+      environment: {
+        DB_HOST: SecretValue.secretsManager(
+          `pesh-snsc-api-tst/rds/admin-secret`,
+          {
+            jsonField: `host`,
+          }
+        ).unsafeUnwrap(),
+        DB_PORT: SecretValue.secretsManager(
+          `pesh-snsc-api-tst/rds/admin-secret`,
+          {
+            jsonField: `port`,
+          }
+        ).unsafeUnwrap(),
+        DB_USER: SecretValue.secretsManager(
+          `pesh-snsc-api-tst/rds/admin-secret`,
+          {
+            jsonField: `username`,
+          }
+        ).unsafeUnwrap(),
+        DB_PASSWORD: SecretValue.secretsManager(
+          `pesh-snsc-api-tst/rds/admin-secret`,
+          {
+            jsonField: `password`,
+          }
+        ).unsafeUnwrap(),
+        DB_NAME: "postgres",
+      },
       code: lambda.Code.fromAsset(
         path.join(__dirname, `../../${props.appName}`),
         {

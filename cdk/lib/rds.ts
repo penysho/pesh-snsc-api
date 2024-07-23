@@ -1,5 +1,4 @@
 import {
-  Duration,
   Fn,
   Stack,
   StackProps,
@@ -23,7 +22,7 @@ export class Rds extends Stack {
 
     const auroraPostgresVersion = "16.2";
     const ec2InstanceType = "t3.medium";
-    const EXCLUDE_CHARACTERS = ":@/\" '";
+    const EXCLUDE_CHARACTERS = "\"@'%$#&().,{_?<≠^>[:;`+*!]}=~|¥/\\";
 
     // VPC
     // https://docs.aws.amazon.com/cdk/v2/guide/tokens.html
@@ -130,6 +129,7 @@ export class Rds extends Stack {
       description: `The subnet group to be used by Aurora in ${props.projectName}-${props.deployEnvironment}.`,
       vpc,
       subnetGroupName: `${props.projectName}-${props.deployEnvironment}`,
+      // 開発環境向けにパブリックアクセス可能にする
       vpcSubnets: publicSubnets,
     });
 
@@ -177,6 +177,7 @@ export class Rds extends Stack {
             instanceClass as ec2.InstanceClass,
             instanceSize as ec2.InstanceSize
           ),
+          // 開発環境向けにパブリックアクセス可能にする
           publiclyAccessible: true,
           parameterGroup,
         }),
@@ -191,6 +192,7 @@ export class Rds extends Stack {
           instanceClass as ec2.InstanceClass,
           instanceSize as ec2.InstanceSize
         ),
+        // 開発環境向けにパブリックアクセス可能にする
         publiclyAccessible: true,
         parameterGroup,
       }),
@@ -214,15 +216,16 @@ export class Rds extends Stack {
     /**
      * RDS Secret rotation
      */
-    new sm.SecretRotation(this, `DbAdminSecretRotation`, {
-      application: sm.SecretRotationApplication.POSTGRES_ROTATION_SINGLE_USER,
-      secret: rdsAdminSecret,
-      target: rdsCluster,
-      vpc,
-      automaticallyAfter: Duration.days(3),
-      excludeCharacters: EXCLUDE_CHARACTERS,
-      securityGroup: rdsRotateSecretsSg,
-      vpcSubnets: publicSubnets,
-    });
+    // Lambdaはパブリックサブネットに配置してもパブリックIPアドレスが設定されずインターネットアクセスできないため、一旦利用しない
+    // new sm.SecretRotation(this, `DbAdminSecretRotation`, {
+    //   application: sm.SecretRotationApplication.POSTGRES_ROTATION_SINGLE_USER,
+    //   secret: rdsAdminSecret,
+    //   target: rdsCluster,
+    //   vpc,
+    //   automaticallyAfter: Duration.days(3),
+    //   excludeCharacters: EXCLUDE_CHARACTERS,
+    //   securityGroup: rdsRotateSecretsSg,
+    //   vpcSubnets: privateSubnets,
+    // });
   }
 }

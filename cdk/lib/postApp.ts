@@ -3,6 +3,7 @@ import { ApiGateway } from "./components/apiGateway";
 import { Lambda } from "./components/lambda";
 
 import { Construct } from "constructs";
+import { Cognito } from "./components/cognito";
 
 export interface AppProps extends StackProps {
   projectName: string;
@@ -35,8 +36,12 @@ export class PostApp extends Stack {
       vpc: vpc,
       ...props,
     });
-    new ApiGateway(this, "Default", {
+    const cognito = new Cognito(this, "Cognito", {
+      ...props,
+    });
+    new ApiGateway(this, "ApiGateway", {
       lambda: postApp.lambdaApp,
+      userPool: cognito.userPool,
       ...props,
     });
   }

@@ -1,9 +1,16 @@
-import { aws_apigateway as apigw, aws_lambda as lambda } from "aws-cdk-lib";
+import * as cdk from "aws-cdk-lib";
+import {
+  aws_apigateway as apigw,
+  aws_cognito as cognito,
+  aws_lambda as lambda,
+  aws_logs as logs,
+} from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { AppProps } from "../postApp";
 
 export interface ApiGatewayProps extends AppProps {
   lambda: lambda.Function;
+  userPool: cognito.UserPool;
 }
 
 export class ApiGateway extends Construct {
@@ -12,17 +19,28 @@ export class ApiGateway extends Construct {
   constructor(scope: Construct, id: string, props: ApiGatewayProps) {
     super(scope, id);
 
-    // APIGateway
+    // Log Group
+    const logGroupName = new logs.LogGroup(this, "LogGroup", {
+      logGroupName: `/aws/apigateway/${props.projectName}-${props.appName}-${props.deployEnvironment}`,
+      retention: logs.RetentionDays.THREE_MONTHS,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
+    // API Gateway
     this.apiGateway = new apigw.RestApi(this, `ApiGateway`, {
       restApiName: `${props.projectName}-${props.appName}-${props.deployEnvironment}`,
       description: `API Gateway to control the ${props.projectName}-${props.appName} API.`,
       deployOptions: {
+        stageName: "prod",
         loggingLevel: apigw.MethodLoggingLevel.INFO,
+        accessLogDestination: new apigw.LogGroupLogDestination(logGroupName),
+        accessLogFormat: apigw.AccessLogFormat.clf(),
         dataTraceEnabled: true,
         metricsEnabled: true,
         tracingEnabled: true,
       },
     });
+
     const apiKey = this.apiGateway.addApiKey(`ApiKey`, {
       apiKeyName: `${props.projectName}-${props.appName}-${props.deployEnvironment}-key`,
       description: `API Key for ${props.projectName}-${props.appName}-${props.deployEnvironment}.`,
@@ -39,8 +57,20 @@ export class ApiGateway extends Construct {
     });
     usagePlan.addApiKey(apiKey);
 
+    const integration = new apigw.LambdaIntegration(props.lambda);
+
+    const authorizer = new apigw.CognitoUserPoolsAuthorizer(
+      this,
+      "CognitoAuthorizer",
+      {
+        cognitoUserPools: [props.userPool],
+      }
+    );
+
     const app = this.apiGateway.root.addResource(props.appName);
-    const courseSearchIntegration = new apigw.LambdaIntegration(props.lambda);
-    app.addMethod("GET", courseSearchIntegration);
+    app.addMethod("GET", integration, {
+      authorizationType: apigw.AuthorizationType.COGNITO,
+      authorizer,
+    });
   }
 }

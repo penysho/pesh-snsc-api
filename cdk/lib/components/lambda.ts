@@ -57,6 +57,7 @@ export class Lambda extends Construct {
       vpc: vpc,
       securityGroups: [lambdaSecurityGroup],
       handler: "bootstrap",
+      tracing: lambda.Tracing.ACTIVE,
       environment: {
         // DB_HOST: SecretValue.secretsManager(
         //   `pesh-snsc-api-tst/rds/admin-secret`,

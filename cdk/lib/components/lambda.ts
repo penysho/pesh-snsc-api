@@ -1,9 +1,12 @@
+import * as cdk from "aws-cdk-lib";
 import {
   Duration,
   aws_ec2 as ec2,
   aws_iam as iam,
   aws_lambda as lambda,
+  aws_logs as logs,
 } from "aws-cdk-lib";
+import { LoggingFormat } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import { AppProps } from "../postApp";
 import path = require("path");
@@ -43,6 +46,13 @@ export class Lambda extends Construct {
       }
     );
 
+    // Log Group
+    const logGroup = new logs.LogGroup(this, "LogGroup", {
+      logGroupName: `/aws/lambda/${props.projectName}-${props.appName}-${props.deployEnvironment}`,
+      retention: logs.RetentionDays.THREE_MONTHS,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
     // Lambda post-app
     // 将来的に以下に移行を想定
     // https://docs.aws.amazon.com/cdk/api/v2/docs/aws-lambda-go-alpha-readme.html
@@ -53,7 +63,8 @@ export class Lambda extends Construct {
       memorySize: 512,
       timeout: Duration.seconds(30),
       role: lambdaServiceRole,
-      logRetention: 180,
+      logGroup: logGroup,
+      loggingFormat: LoggingFormat.JSON,
       vpc: vpc,
       securityGroups: [lambdaSecurityGroup],
       handler: "bootstrap",

@@ -20,7 +20,7 @@ export class ApiGateway extends Construct {
     super(scope, id);
 
     // Log Group
-    const logGroupName = new logs.LogGroup(this, "LogGroup", {
+    const logGroup = new logs.LogGroup(this, "LogGroup", {
       logGroupName: `/aws/apigateway/${props.projectName}-${props.appName}-${props.deployEnvironment}`,
       retention: logs.RetentionDays.THREE_MONTHS,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -33,7 +33,7 @@ export class ApiGateway extends Construct {
       deployOptions: {
         stageName: "prod",
         loggingLevel: apigw.MethodLoggingLevel.INFO,
-        accessLogDestination: new apigw.LogGroupLogDestination(logGroupName),
+        accessLogDestination: new apigw.LogGroupLogDestination(logGroup),
         accessLogFormat: apigw.AccessLogFormat.clf(),
         dataTraceEnabled: true,
         metricsEnabled: true,

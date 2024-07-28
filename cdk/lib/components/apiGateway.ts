@@ -6,6 +6,8 @@ import {
   aws_logs as logs,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
+import { readFileSync } from "fs";
+import * as yaml from "yaml";
 import { AppProps } from "../postApp";
 
 export interface ApiGatewayProps extends AppProps {
@@ -26,8 +28,26 @@ export class ApiGateway extends Construct {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
+    // OpenAPIの取得
+    const swaggerYaml = yaml.parse(
+      readFileSync(`../${props.appName}/apidef/openapi.yaml`).toString()
+    );
+
+    // Lambda統合設定
+    for (const path in swaggerYaml.paths) {
+      for (const method in swaggerYaml.paths[path]) {
+        swaggerYaml.paths[path][method]["x-amazon-apigateway-integration"] = {
+          uri: `arn:${cdk.Aws.PARTITION}:apigateway:${cdk.Aws.REGION}:lambda:path/2015-03-31/functions/${props.lambda.functionArn}/invocations`,
+          passthroughBehavior: "when_no_match",
+          httpMethod: "POST",
+          type: "aws_proxy",
+        };
+      }
+    }
+
     // API Gateway
     this.apiGateway = new apigw.RestApi(this, `ApiGateway`, {
+      // apiDefinition: apigw.ApiDefinition.fromInline(swaggerYaml),
       restApiName: `${props.projectName}-${props.appName}-${props.deployEnvironment}`,
       description: `API Gateway to control the ${props.projectName}-${props.appName} API.`,
       deployOptions: {
@@ -71,6 +91,14 @@ export class ApiGateway extends Construct {
     app.addMethod("GET", integration, {
       authorizationType: apigw.AuthorizationType.COGNITO,
       authorizer,
+    });
+    app.addProxy({
+      defaultIntegration: integration,
+      anyMethod: true,
+      defaultMethodOptions: {
+        authorizationType: apigw.AuthorizationType.COGNITO,
+        authorizer,
+      },
     });
   }
 }

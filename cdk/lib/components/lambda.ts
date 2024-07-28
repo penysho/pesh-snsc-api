@@ -11,6 +11,7 @@ import { Construct } from "constructs";
 import { AppProps } from "../postApp";
 import path = require("path");
 
+// appディレクトリからの相対パス
 const appBuildPath = "./cmd/aws/lambda/apigw/main.go";
 
 export interface LambdaProps extends AppProps {

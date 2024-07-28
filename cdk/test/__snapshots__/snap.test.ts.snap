@@ -1,0 +1,1217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot test post-app 1`] = `
+{
+  "Outputs": {
+    "ApiGatewayEndpointCF00F0F5": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "ApiGateway07707A23",
+            },
+            ".execute-api.",
+            {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            {
+              "Ref": "ApiGatewayDeploymentStageprodBCFE2A82",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": {},
+  "Resources": {
+    "ApiGateway07707A23": {
+      "Properties": {
+        "Description": "API Gateway to control the pesh-snsc-api-post-app API.",
+        "Name": "pesh-snsc-api-post-app-tst",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "ApiGatewayAccountC6A6E8BA": {
+      "DeletionPolicy": "Retain",
+      "DependsOn": [
+        "ApiGateway07707A23",
+      ],
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "ApiGatewayCloudWatchRoleB785DEF1",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ApiGatewayApiKeyD989BFE2": {
+      "Properties": {
+        "Description": "API Key for pesh-snsc-api-post-app-tst.",
+        "Enabled": true,
+        "Name": "pesh-snsc-api-post-app-tst-key",
+        "StageKeys": [
+          {
+            "RestApiId": {
+              "Ref": "ApiGateway07707A23",
+            },
+            "StageName": {
+              "Ref": "ApiGatewayDeploymentStageprodBCFE2A82",
+            },
+          },
+        ],
+      },
+      "Type": "AWS::ApiGateway::ApiKey",
+    },
+    "ApiGatewayCloudWatchRoleB785DEF1": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ApiGatewayCognitoAuthorizer77052CC4": {
+      "Properties": {
+        "IdentitySource": "method.request.header.Authorization",
+        "Name": "peshsnscapipostapptstApiGatewayCognitoAuthorizer5C401345",
+        "ProviderARNs": [
+          {
+            "Fn::GetAtt": [
+              "CognitoUserPool279BBD48",
+              "Arn",
+            ],
+          },
+        ],
+        "RestApiId": {
+          "Ref": "ApiGateway07707A23",
+        },
+        "Type": "COGNITO_USER_POOLS",
+      },
+      "Type": "AWS::ApiGateway::Authorizer",
+    },
+    "ApiGatewayDeployment2D025E241406e7d8bb4568739e2b4ea5cefff129": {
+      "DependsOn": [
+        "ApiGatewaypostappproxyANYE66D24EC",
+        "ApiGatewaypostappproxy7417EE3F",
+        "ApiGatewaypostappGET5655B5B4",
+        "ApiGatewaypostapp4F01B5D2",
+      ],
+      "Properties": {
+        "Description": "API Gateway to control the pesh-snsc-api-post-app API.",
+        "RestApiId": {
+          "Ref": "ApiGateway07707A23",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "ApiGatewayDeploymentStageprodBCFE2A82": {
+      "DependsOn": [
+        "ApiGatewayAccountC6A6E8BA",
+      ],
+      "Properties": {
+        "AccessLogSetting": {
+          "DestinationArn": {
+            "Fn::GetAtt": [
+              "ApiGatewayLogGroup0296FCB2",
+              "Arn",
+            ],
+          },
+          "Format": "$context.identity.sourceIp $context.identity.caller $context.identity.user [$context.requestTime] "$context.httpMethod $context.resourcePath $context.protocol" $context.status $context.responseLength $context.requestId",
+        },
+        "DeploymentId": {
+          "Ref": "ApiGatewayDeployment2D025E241406e7d8bb4568739e2b4ea5cefff129",
+        },
+        "MethodSettings": [
+          {
+            "DataTraceEnabled": true,
+            "HttpMethod": "*",
+            "LoggingLevel": "INFO",
+            "MetricsEnabled": true,
+            "ResourcePath": "/*",
+          },
+        ],
+        "RestApiId": {
+          "Ref": "ApiGateway07707A23",
+        },
+        "StageName": "prod",
+        "TracingEnabled": true,
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "ApiGatewayLogGroup0296FCB2": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "LogGroupName": "/aws/apigateway/pesh-snsc-api-post-app-tst",
+        "RetentionInDays": 90,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "ApiGatewayUsagePlanFC863CDA": {
+      "Properties": {
+        "ApiStages": [
+          {
+            "ApiId": {
+              "Ref": "ApiGateway07707A23",
+            },
+            "Stage": {
+              "Ref": "ApiGatewayDeploymentStageprodBCFE2A82",
+            },
+            "Throttle": {},
+          },
+        ],
+        "Description": "Usage Plan for pesh-snsc-api-post-app-tst.",
+        "UsagePlanName": "pesh-snsc-api-post-app-tst-plan",
+      },
+      "Type": "AWS::ApiGateway::UsagePlan",
+    },
+    "ApiGatewayUsagePlanUsagePlanKeyResourcepeshsnscapipostapptstApiGatewayApiKey661896FA56FB0F85": {
+      "Properties": {
+        "KeyId": {
+          "Ref": "ApiGatewayApiKeyD989BFE2",
+        },
+        "KeyType": "API_KEY",
+        "UsagePlanId": {
+          "Ref": "ApiGatewayUsagePlanFC863CDA",
+        },
+      },
+      "Type": "AWS::ApiGateway::UsagePlanKey",
+    },
+    "ApiGatewaypostapp4F01B5D2": {
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGateway07707A23",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "post-app",
+        "RestApiId": {
+          "Ref": "ApiGateway07707A23",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewaypostappGET5655B5B4": {
+      "Properties": {
+        "AuthorizationType": "COGNITO_USER_POOLS",
+        "AuthorizerId": {
+          "Ref": "ApiGatewayCognitoAuthorizer77052CC4",
+        },
+        "HttpMethod": "GET",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "PostAppLambdaApp18FF7A8E",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewaypostapp4F01B5D2",
+        },
+        "RestApiId": {
+          "Ref": "ApiGateway07707A23",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "ApiGatewaypostappGETApiPermissionTestpeshsnscapipostapptstApiGateway82DB9C95GETpostapp0188C8C9": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "PostAppLambdaApp18FF7A8E",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "ApiGateway07707A23",
+              },
+              "/test-invoke-stage/GET/post-app",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiGatewaypostappGETApiPermissionpeshsnscapipostapptstApiGateway82DB9C95GETpostappCDD5E206": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "PostAppLambdaApp18FF7A8E",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "ApiGateway07707A23",
+              },
+              "/",
+              {
+                "Ref": "ApiGatewayDeploymentStageprodBCFE2A82",
+              },
+              "/GET/post-app",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiGatewaypostappproxy7417EE3F": {
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewaypostapp4F01B5D2",
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "ApiGateway07707A23",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewaypostappproxyANYApiPermissionTestpeshsnscapipostapptstApiGateway82DB9C95ANYpostappproxyE22E9502": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "PostAppLambdaApp18FF7A8E",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "ApiGateway07707A23",
+              },
+              "/test-invoke-stage/*/post-app/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiGatewaypostappproxyANYApiPermissionpeshsnscapipostapptstApiGateway82DB9C95ANYpostappproxy1524CF19": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "PostAppLambdaApp18FF7A8E",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "ApiGateway07707A23",
+              },
+              "/",
+              {
+                "Ref": "ApiGatewayDeploymentStageprodBCFE2A82",
+              },
+              "/*/post-app/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ApiGatewaypostappproxyANYE66D24EC": {
+      "Properties": {
+        "AuthorizationType": "COGNITO_USER_POOLS",
+        "AuthorizerId": {
+          "Ref": "ApiGatewayCognitoAuthorizer77052CC4",
+        },
+        "HttpMethod": "ANY",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "PostAppLambdaApp18FF7A8E",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewaypostappproxy7417EE3F",
+        },
+        "RestApiId": {
+          "Ref": "ApiGateway07707A23",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "CognitoUserPool279BBD48": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "AccountRecoverySetting": {
+          "RecoveryMechanisms": [
+            {
+              "Name": "verified_phone_number",
+              "Priority": 1,
+            },
+            {
+              "Name": "verified_email",
+              "Priority": 2,
+            },
+          ],
+        },
+        "AdminCreateUserConfig": {
+          "AllowAdminCreateUserOnly": false,
+        },
+        "AutoVerifiedAttributes": [
+          "email",
+        ],
+        "EmailVerificationMessage": "Thanks for signing up to our app! Your verification code is {####}",
+        "EmailVerificationSubject": "Verify your email for our app!",
+        "SmsVerificationMessage": "The verification code to your new account is {####}",
+        "UsernameAttributes": [
+          "email",
+        ],
+        "VerificationMessageTemplate": {
+          "DefaultEmailOption": "CONFIRM_WITH_CODE",
+          "EmailMessage": "Thanks for signing up to our app! Your verification code is {####}",
+          "EmailSubject": "Verify your email for our app!",
+          "SmsMessage": "The verification code to your new account is {####}",
+        },
+      },
+      "Type": "AWS::Cognito::UserPool",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "CognitoUserPoolUserPoolClient1E6BF456": {
+      "Properties": {
+        "AllowedOAuthFlows": [
+          "implicit",
+          "code",
+        ],
+        "AllowedOAuthFlowsUserPoolClient": true,
+        "AllowedOAuthScopes": [
+          "profile",
+          "phone",
+          "email",
+          "openid",
+          "aws.cognito.signin.user.admin",
+        ],
+        "CallbackURLs": [
+          "https://example.com",
+        ],
+        "ExplicitAuthFlows": [
+          "ALLOW_USER_PASSWORD_AUTH",
+          "ALLOW_ADMIN_USER_PASSWORD_AUTH",
+          "ALLOW_REFRESH_TOKEN_AUTH",
+        ],
+        "SupportedIdentityProviders": [
+          "COGNITO",
+        ],
+        "UserPoolId": {
+          "Ref": "CognitoUserPool279BBD48",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolClient",
+    },
+    "CognitoUserPoolUserPoolDomainC12FFA2B": {
+      "Properties": {
+        "Domain": "pesh-igpjt",
+        "UserPoolId": {
+          "Ref": "CognitoUserPool279BBD48",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolDomain",
+    },
+    "PostAppLambdaApp18FF7A8E": {
+      "DependsOn": [
+        "PostAppLambdaServiceRoleDefaultPolicyC6245F23",
+        "PostAppLambdaServiceRole42763E5E",
+      ],
+      "Properties": {
+        "Code": {},
+        "Description": "Lambda that executes the pesh-snsc-api-post-app-tst API.",
+        "Environment": {
+          "Variables": {
+            "DB_NAME": "postgres",
+          },
+        },
+        "FunctionName": "pesh-snsc-api-post-app-tst",
+        "Handler": "bootstrap",
+        "LoggingConfig": {
+          "LogFormat": "JSON",
+          "LogGroup": {
+            "Ref": "PostAppLogGroupB143B501",
+          },
+        },
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "PostAppLambdaServiceRole42763E5E",
+            "Arn",
+          ],
+        },
+        "Runtime": "provided.al2023",
+        "Timeout": 30,
+        "TracingConfig": {
+          "Mode": "Active",
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            {
+              "Fn::GetAtt": [
+                "PostAppLambdaSecurityGroup10FDFBE4",
+                "GroupId",
+              ],
+            },
+          ],
+          "SubnetIds": [
+            {
+              "Fn::ImportValue": "shared-vpc-tst-PrivateSubnet1",
+            },
+            {
+              "Fn::ImportValue": "shared-vpc-tst-PrivateSubnet2",
+            },
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "PostAppLambdaSecurityGroup10FDFBE4": {
+      "Properties": {
+        "GroupDescription": "Generally used in pesh-snsc-api-tst Lambda deployed in VPC.",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "shared-vpc-tst-Vpc",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "PostAppLambdaServiceRole42763E5E": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Description": "Generally used in pesh-snsc-api-tst Lambda deployed in VPC.",
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "PostAppLambdaServiceRoleDefaultPolicyC6245F23": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PostAppLambdaServiceRoleDefaultPolicyC6245F23",
+        "Roles": [
+          {
+            "Ref": "PostAppLambdaServiceRole42763E5E",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "PostAppLogGroupB143B501": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/pesh-snsc-api-post-app-tst",
+        "RetentionInDays": 90,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`snapshot test rds 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "ParameterGroup5E32DECB": {
+      "Properties": {
+        "DBParameterGroupName": "pesh-snsc-api-tst",
+        "Description": "pesh-snsc-api-tst Parameter group for aurora-postgresql.",
+        "Family": "aurora-postgresql16",
+        "Parameters": {},
+      },
+      "Type": "AWS::RDS::DBParameterGroup",
+    },
+    "RdsAdminSecret66D6C09F": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "Description": "pesh-snsc-api-tst RDS Admin User Secret.",
+        "GenerateSecretString": {
+          "ExcludeCharacters": ""@'%$#&().,{_?<≠^>[:;\`+*!]}=~|¥/\\",
+          "GenerateStringKey": "password",
+          "PasswordLength": 32,
+          "RequireEachIncludedType": true,
+          "SecretStringTemplate": "{"username": "postgresAdmin"}",
+        },
+        "Name": "pesh-snsc-api-tst/rds/admin-secret",
+      },
+      "Type": "AWS::SecretsManager::Secret",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "RdsAdminSecretAttachment2B83E8F6": {
+      "Properties": {
+        "SecretId": {
+          "Ref": "RdsAdminSecret66D6C09F",
+        },
+        "TargetId": {
+          "Ref": "RdsCluster0F718D69",
+        },
+        "TargetType": "AWS::RDS::DBCluster",
+      },
+      "Type": "AWS::SecretsManager::SecretTargetAttachment",
+    },
+    "RdsClientSgC52F2D37": {
+      "Properties": {
+        "GroupDescription": "pesh-snsc-api-tst RDS Client Security Group.",
+        "GroupName": "pesh-snsc-api-tst-rds-client",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "shared-vpc-tst-Vpc",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "RdsCluster0F718D69": {
+      "DeletionPolicy": "Snapshot",
+      "Properties": {
+        "CopyTagsToSnapshot": true,
+        "DBClusterIdentifier": "pesh-snsc-api-tst-cluster",
+        "DBClusterParameterGroupName": "default.aurora-postgresql16",
+        "DBSubnetGroupName": {
+          "Ref": "SubnetGroup",
+        },
+        "DeletionProtection": false,
+        "EnableIAMDatabaseAuthentication": true,
+        "Engine": "aurora-postgresql",
+        "EngineVersion": "16.2",
+        "MasterUserPassword": {
+          "Fn::Join": [
+            "",
+            [
+              "{{resolve:secretsmanager:",
+              {
+                "Ref": "RdsAdminSecret66D6C09F",
+              },
+              ":SecretString:password::}}",
+            ],
+          ],
+        },
+        "MasterUsername": {
+          "Fn::Join": [
+            "",
+            [
+              "{{resolve:secretsmanager:",
+              {
+                "Ref": "RdsAdminSecret66D6C09F",
+              },
+              ":SecretString:username::}}",
+            ],
+          ],
+        },
+        "Port": 5432,
+        "StorageEncrypted": true,
+        "VpcSecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "RdsSg7F9F43B6",
+              "GroupId",
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBCluster",
+      "UpdateReplacePolicy": "Snapshot",
+    },
+    "RdsClusterReader1BD4AF42C": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "RdsClusterWriter1D5766AC",
+      ],
+      "Properties": {
+        "DBClusterIdentifier": {
+          "Ref": "RdsCluster0F718D69",
+        },
+        "DBInstanceClass": "db.t3.medium",
+        "DBInstanceIdentifier": "pesh-snsc-api-tst-reader-1",
+        "DBParameterGroupName": {
+          "Ref": "ParameterGroup5E32DECB",
+        },
+        "Engine": "aurora-postgresql",
+        "PromotionTier": 2,
+        "PubliclyAccessible": true,
+      },
+      "Type": "AWS::RDS::DBInstance",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "RdsClusterWriter1D5766AC": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "DBClusterIdentifier": {
+          "Ref": "RdsCluster0F718D69",
+        },
+        "DBInstanceClass": "db.t3.medium",
+        "DBInstanceIdentifier": "pesh-snsc-api-tst-writer",
+        "DBParameterGroupName": {
+          "Ref": "ParameterGroup5E32DECB",
+        },
+        "Engine": "aurora-postgresql",
+        "PromotionTier": 0,
+        "PubliclyAccessible": true,
+      },
+      "Type": "AWS::RDS::DBInstance",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "RdsProxyE8EC09E1": {
+      "Properties": {
+        "Auth": [
+          {
+            "AuthScheme": "SECRETS",
+            "IAMAuth": "DISABLED",
+            "SecretArn": {
+              "Ref": "RdsAdminSecretAttachment2B83E8F6",
+            },
+          },
+        ],
+        "DBProxyName": "pesh-snsc-api-tst",
+        "DebugLogging": true,
+        "EngineFamily": "POSTGRESQL",
+        "RequireTLS": true,
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "RdsProxyIAMRoleC275BF0F",
+            "Arn",
+          ],
+        },
+        "VpcSecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "RdsProxySg752B4ED9",
+              "GroupId",
+            ],
+          },
+        ],
+        "VpcSubnetIds": [
+          {
+            "Fn::ImportValue": "shared-vpc-tst-PublicSubnet1",
+          },
+          {
+            "Fn::ImportValue": "shared-vpc-tst-PublicSubnet2",
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBProxy",
+    },
+    "RdsProxyIAMRoleC275BF0F": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "rds.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "RdsProxyIAMRoleDefaultPolicy82D221E7": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Ref": "RdsAdminSecretAttachment2B83E8F6",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "RdsProxyIAMRoleDefaultPolicy82D221E7",
+        "Roles": [
+          {
+            "Ref": "RdsProxyIAMRoleC275BF0F",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "RdsProxyProxyTargetGroupD847F6F0": {
+      "DependsOn": [
+        "RdsCluster0F718D69",
+      ],
+      "Properties": {
+        "ConnectionPoolConfigurationInfo": {},
+        "DBClusterIdentifiers": [
+          {
+            "Ref": "RdsCluster0F718D69",
+          },
+        ],
+        "DBProxyName": {
+          "Ref": "RdsProxyE8EC09E1",
+        },
+        "TargetGroupName": "default",
+      },
+      "Type": "AWS::RDS::DBProxyTargetGroup",
+    },
+    "RdsProxySg752B4ED9": {
+      "Properties": {
+        "GroupDescription": "pesh-snsc-api-tst RDS Proxy Security Group.",
+        "GroupName": "pesh-snsc-api-tst-rds-proxy",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "RdsClientSgC52F2D37",
+                      "GroupId",
+                    ],
+                  },
+                  ":5432",
+                ],
+              ],
+            },
+            "FromPort": 5432,
+            "IpProtocol": "tcp",
+            "SourceSecurityGroupId": {
+              "Fn::GetAtt": [
+                "RdsClientSgC52F2D37",
+                "GroupId",
+              ],
+            },
+            "ToPort": 5432,
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "shared-vpc-tst-Vpc",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "RdsRotateSecretsSg2CDDE581": {
+      "Properties": {
+        "GroupDescription": "pesh-snsc-api-tst RDS Secrets rotate Security Group.",
+        "GroupName": "pesh-snsc-api-tst-rds-rotate-secrets",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "shared-vpc-tst-Vpc",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "RdsSg7F9F43B6": {
+      "Properties": {
+        "GroupDescription": "pesh-snsc-api-tst RDS Instance Security Group.",
+        "GroupName": "pesh-snsc-api-tst-rds",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "RdsClientSgC52F2D37",
+                      "GroupId",
+                    ],
+                  },
+                  ":5432",
+                ],
+              ],
+            },
+            "FromPort": 5432,
+            "IpProtocol": "tcp",
+            "SourceSecurityGroupId": {
+              "Fn::GetAtt": [
+                "RdsClientSgC52F2D37",
+                "GroupId",
+              ],
+            },
+            "ToPort": 5432,
+          },
+          {
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "RdsRotateSecretsSg2CDDE581",
+                      "GroupId",
+                    ],
+                  },
+                  ":5432",
+                ],
+              ],
+            },
+            "FromPort": 5432,
+            "IpProtocol": "tcp",
+            "SourceSecurityGroupId": {
+              "Fn::GetAtt": [
+                "RdsRotateSecretsSg2CDDE581",
+                "GroupId",
+              ],
+            },
+            "ToPort": 5432,
+          },
+          {
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "RdsProxySg752B4ED9",
+                      "GroupId",
+                    ],
+                  },
+                  ":5432",
+                ],
+              ],
+            },
+            "FromPort": 5432,
+            "IpProtocol": "tcp",
+            "SourceSecurityGroupId": {
+              "Fn::GetAtt": [
+                "RdsProxySg752B4ED9",
+                "GroupId",
+              ],
+            },
+            "ToPort": 5432,
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "shared-vpc-tst-Vpc",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "RdsSgfrompeshsnscapirdststRdsProxySg0C7EFCDAIndirectPortEAE4BF73": {
+      "Properties": {
+        "Description": "Allow connections to the database Cluster from the Proxy",
+        "FromPort": {
+          "Fn::GetAtt": [
+            "RdsCluster0F718D69",
+            "Endpoint.Port",
+          ],
+        },
+        "GroupId": {
+          "Fn::GetAtt": [
+            "RdsSg7F9F43B6",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": {
+          "Fn::GetAtt": [
+            "RdsProxySg752B4ED9",
+            "GroupId",
+          ],
+        },
+        "ToPort": {
+          "Fn::GetAtt": [
+            "RdsCluster0F718D69",
+            "Endpoint.Port",
+          ],
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
+    },
+    "SubnetGroup": {
+      "Properties": {
+        "DBSubnetGroupDescription": "The subnet group to be used by Aurora in pesh-snsc-api-tst.",
+        "DBSubnetGroupName": "pesh-snsc-api-tst",
+        "SubnetIds": [
+          {
+            "Fn::ImportValue": "shared-vpc-tst-PublicSubnet1",
+          },
+          {
+            "Fn::ImportValue": "shared-vpc-tst-PublicSubnet2",
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBSubnetGroup",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

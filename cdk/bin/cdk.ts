@@ -1,18 +1,13 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib";
 import "source-map-support/register";
-import { PostApp } from "../lib/postApp";
-import { Rds } from "../lib/rds";
+import { deployEnvironment, postAppName, projectName } from "../config/config";
+import { AppProps, PostApp } from "../lib/postApp";
+import { DbProps, Rds } from "../lib/rds";
 
 const app = new cdk.App();
 
-const projectName: string = "pesh-snsc-api";
-const postAppName: string = "post-app";
-const deployEnvironment = process.env.DEPLOY_ENV
-  ? process.env.DEPLOY_ENV
-  : "tst";
-
-new PostApp(app, `${projectName}-${postAppName}-${deployEnvironment}`, {
+export const postAppProps: AppProps = {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
@@ -20,13 +15,21 @@ new PostApp(app, `${projectName}-${postAppName}-${deployEnvironment}`, {
   projectName: projectName,
   appName: postAppName,
   deployEnvironment: deployEnvironment,
-});
+};
 
-new Rds(app, `${projectName}-rds-${deployEnvironment}`, {
+export const rdsProps: DbProps = {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
   projectName: projectName,
   deployEnvironment: deployEnvironment,
-});
+};
+
+new PostApp(
+  app,
+  `${projectName}-${postAppName}-${deployEnvironment}`,
+  postAppProps
+);
+
+new Rds(app, `${projectName}-rds-${deployEnvironment}`, rdsProps);

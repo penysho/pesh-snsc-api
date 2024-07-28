@@ -61,7 +61,7 @@ export class Lambda extends Construct {
       functionName: `${props.projectName}-${props.appName}-${props.deployEnvironment}`,
       description: `Lambda that executes the ${props.projectName}-${props.appName}-${props.deployEnvironment} API.`,
       runtime: lambda.Runtime.PROVIDED_AL2023,
-      memorySize: 512,
+      memorySize: 1024,
       timeout: Duration.seconds(30),
       role: lambdaServiceRole,
       logGroup: logGroup,

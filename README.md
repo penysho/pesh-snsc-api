@@ -9,8 +9,8 @@
 ### 使用技術一覧
 
 <p style="display: inline">
- <img src="https://img.shields.io/badge/-Go-00ADD8.svg?logo=go&style=for-the-badge">
- <img src="https://img.shields.io/badge/-Gin-008ECF.svg?logo=gin&style=for-the-badge">
+ <img src="https://img.shields.io/badge/-Go-555.svg?logo=go&style=for-the-badge">
+ <img src="https://img.shields.io/badge/-Gin-555.svg?logo=gin&style=for-the-badge">
  <img src="https://img.shields.io/badge/-Docker-1488C6.svg?logo=docker&style=for-the-badge">
  <img src="https://img.shields.io/badge/-PostgreSQL-336791.svg?logo=postgresql&style=for-the-badge">
 </p>

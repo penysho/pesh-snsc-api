@@ -25,7 +25,8 @@
   // https://github.com/DavidAnson/markdownlint/blob/v0.19.0/doc/Rules.md#md025
   "markdownlint.config": {
     "no-duplicate-heading": false,
-    "no-inline-html": false
+    "no-inline-html": false,
+    "no-alt-text": false
   },
 
   // 以下CloudFormation用に要追加設定

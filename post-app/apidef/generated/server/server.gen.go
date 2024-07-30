@@ -17,12 +17,6 @@ type DomainError struct {
 	Errors string `json:"errors"`
 }
 
-// GetPostResponse 投稿詳細レスポンス
-type GetPostResponse struct {
-	// Post 投稿情報
-	Post Post `json:"post"`
-}
-
 // Post 投稿情報
 type Post struct {
 	// Caption 投稿詳細文
@@ -46,6 +40,18 @@ type Post struct {
 	// Title 投稿タイトル
 	Title string `json:"title"`
 }
+
+// BadRequest エラーレスポンス
+type BadRequest = DomainError
+
+// GetPostResponse 投稿詳細レスポンス
+type GetPostResponse struct {
+	// Post 投稿情報
+	Post Post `json:"post"`
+}
+
+// InternalServerError エラーレスポンス
+type InternalServerError = DomainError
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {

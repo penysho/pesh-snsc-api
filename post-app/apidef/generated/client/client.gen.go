@@ -21,12 +21,6 @@ type DomainError struct {
 	Errors string `json:"errors"`
 }
 
-// GetPostResponse 投稿詳細レスポンス
-type GetPostResponse struct {
-	// Post 投稿情報
-	Post Post `json:"post"`
-}
-
 // Post 投稿情報
 type Post struct {
 	// Caption 投稿詳細文
@@ -50,6 +44,18 @@ type Post struct {
 	// Title 投稿タイトル
 	Title string `json:"title"`
 }
+
+// BadRequest エラーレスポンス
+type BadRequest = DomainError
+
+// GetPostResponse 投稿詳細レスポンス
+type GetPostResponse struct {
+	// Post 投稿情報
+	Post Post `json:"post"`
+}
+
+// InternalServerError エラーレスポンス
+type InternalServerError = DomainError
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -225,8 +231,8 @@ type GetPostClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *GetPostResponse
-	JSON400      *DomainError
-	JSON500      *DomainError
+	JSON400      *BadRequest
+	JSON500      *InternalServerError
 }
 
 // Status returns HTTPResponse.Status
@@ -276,14 +282,14 @@ func ParseGetPostClientResponse(rsp *http.Response) (*GetPostClientResponse, err
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest DomainError
+		var dest BadRequest
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest DomainError
+		var dest InternalServerError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

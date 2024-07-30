@@ -23,23 +23,11 @@ paths:
             type: integer
       responses:
         "200":
-          description: 成功時レスポンス
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GetPostResponse"
+          $ref: "#/components/responses/GetPostResponse"
         "400":
-          description: 400番台エラーレスポンス
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DomainError"
+          $ref: "#/components/responses/BadRequest"
         "500":
-          description: 500番台エラーレスポンス
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DomainError"
+          $ref: "#/components/responses/InternalServerError"
 
 components:
   schemas:
@@ -85,15 +73,6 @@ components:
           example: "2020-01-31T23:59:59+09:00"
           format: date-time
 
-    GetPostResponse:
-      type: object
-      description: 投稿詳細レスポンス
-      required:
-        - post
-      properties:
-        post:
-          $ref: "#/components/schemas/Post"
-
     DomainError:
       type: object
       description: エラーレスポンス
@@ -103,3 +82,31 @@ components:
         errors:
           type: string
           example: Error Messages
+
+  responses:
+    GetPostResponse:
+      description: 投稿取得成功時レスポンス
+      content:
+        application/json:
+          schema:
+            type: object
+            description: 投稿詳細レスポンス
+            required:
+              - post
+            properties:
+              post:
+                $ref: "#/components/schemas/Post"
+
+    BadRequest:
+      description: 400番台エラーレスポンス
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DomainError"
+
+    InternalServerError:
+      description: 400番台エラーレスポンス
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DomainError"

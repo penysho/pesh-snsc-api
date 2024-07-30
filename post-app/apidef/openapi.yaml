@@ -6,7 +6,7 @@ tags:
   - name: post
     description: 投稿情報に関するエンドポイント
 paths:
-  /post-app/post/{postId}:
+  /posts/{postId}:
     get:
       summary: 投稿詳細情報の取得
       description: 指定されたIDの投稿詳細情報を取得する

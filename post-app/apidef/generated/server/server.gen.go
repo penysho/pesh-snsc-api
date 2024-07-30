@@ -50,7 +50,7 @@ type Post struct {
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// 投稿詳細情報の取得
-	// (GET /post-app/post/{postId})
+	// (GET /posts/{postId})
 	GetPost(c *gin.Context, postId int)
 }
 
@@ -114,5 +114,5 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 		ErrorHandler:       errorHandler,
 	}
 
-	router.GET(options.BaseURL+"/post-app/post/:postId", wrapper.GetPost)
+	router.GET(options.BaseURL+"/posts/:postId", wrapper.GetPost)
 }

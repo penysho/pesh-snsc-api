@@ -156,7 +156,7 @@ func NewGetPostRequest(server string, postId int) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/post-app/post/%s", pathParam0)
+	operationPath := fmt.Sprintf("/posts/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}

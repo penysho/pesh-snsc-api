@@ -28,7 +28,7 @@ func TestServer_GetPost(t *testing.T) {
 	}
 
 	type args struct {
-		postId int
+		postId uint64
 	}
 	tests := []struct {
 		name          string

@@ -36,7 +36,7 @@ func Test_postInteractorImpl_GetPost(t *testing.T) {
 	}
 
 	type args struct {
-		id int
+		id uint64
 	}
 	tests := []struct {
 		name           string

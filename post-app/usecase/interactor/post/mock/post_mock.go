@@ -41,7 +41,7 @@ func (m *MockPostInteractor) EXPECT() *MockPostInteractorMockRecorder {
 }
 
 // GetPost mocks base method.
-func (m *MockPostInteractor) GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) {
+func (m *MockPostInteractor) GetPost(c *gin.Context, id uint64, outputBoundary presenter.PostPresenter) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "GetPost", c, id, outputBoundary)
 }

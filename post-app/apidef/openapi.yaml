@@ -21,6 +21,7 @@ paths:
           example: 000POSTID001
           schema:
             type: integer
+            x-go-type: uint64
       responses:
         "200":
           $ref: "#/components/responses/GetPostResponse"

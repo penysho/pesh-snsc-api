@@ -9,7 +9,7 @@ import (
 
 //go:generate mockgen -source=post.go -destination=mock/post_mock.go -package=interactor_mock
 type PostInteractor interface {
-	GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter)
+	GetPost(c *gin.Context, id uint64, outputBoundary presenter.PostPresenter)
 }
 
 type postInteractorImpl struct {
@@ -21,8 +21,8 @@ func NewPostInteractor(postRepo postRepo.PostRepository) PostInteractor {
 }
 
 // GetPost 投稿情報取得してレスポンスする処理を操作する
-func (i *postInteractorImpl) GetPost(c *gin.Context, id int, outputBoundary presenter.PostPresenter) {
-	post, err := i.repository.FindByID(id)
+func (i *postInteractorImpl) GetPost(c *gin.Context, id uint64, outputBoundary presenter.PostPresenter) {
+	post, err := i.repository.FindByID(int(id))
 	if err != nil {
 		outputBoundary.ErrorResponse(err)
 		return

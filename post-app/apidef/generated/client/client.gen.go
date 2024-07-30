@@ -131,10 +131,10 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 	// GetPost request
-	GetPost(ctx context.Context, postId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetPost(ctx context.Context, postId uint64, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) GetPost(ctx context.Context, postId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetPost(ctx context.Context, postId uint64, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPostRequest(c.Server, postId)
 	if err != nil {
 		return nil, err
@@ -147,7 +147,7 @@ func (c *Client) GetPost(ctx context.Context, postId int, reqEditors ...RequestE
 }
 
 // NewGetPostRequest generates requests for GetPost
-func NewGetPostRequest(server string, postId int) (*http.Request, error) {
+func NewGetPostRequest(server string, postId uint64) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -224,7 +224,7 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// GetPostWithResponse request
-	GetPostWithResponse(ctx context.Context, postId int, reqEditors ...RequestEditorFn) (*GetPostClientResponse, error)
+	GetPostWithResponse(ctx context.Context, postId uint64, reqEditors ...RequestEditorFn) (*GetPostClientResponse, error)
 }
 
 type GetPostClientResponse struct {
@@ -252,7 +252,7 @@ func (r GetPostClientResponse) StatusCode() int {
 }
 
 // GetPostWithResponse request returning *GetPostClientResponse
-func (c *ClientWithResponses) GetPostWithResponse(ctx context.Context, postId int, reqEditors ...RequestEditorFn) (*GetPostClientResponse, error) {
+func (c *ClientWithResponses) GetPostWithResponse(ctx context.Context, postId uint64, reqEditors ...RequestEditorFn) (*GetPostClientResponse, error) {
 	rsp, err := c.GetPost(ctx, postId, reqEditors...)
 	if err != nil {
 		return nil, err

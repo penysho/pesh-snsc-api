@@ -57,7 +57,7 @@ type InternalServerError = DomainError
 type ServerInterface interface {
 	// 投稿詳細情報の取得
 	// (GET /posts/{postId})
-	GetPost(c *gin.Context, postId int)
+	GetPost(c *gin.Context, postId uint64)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -75,7 +75,7 @@ func (siw *ServerInterfaceWrapper) GetPost(c *gin.Context) {
 	var err error
 
 	// ------------- Path parameter "postId" -------------
-	var postId int
+	var postId uint64
 
 	err = runtime.BindStyledParameterWithOptions("simple", "postId", c.Param("postId"), &postId, runtime.BindStyledParameterOptions{Explode: false, Required: true})
 	if err != nil {

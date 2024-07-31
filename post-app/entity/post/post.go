@@ -1,22 +1,24 @@
 package post
 
-import "time"
+import (
+	"time"
+)
 
 type Post struct {
-	id            int
+	id            uint64
 	title         string
-	likeCount     int
-	commentsCount int
+	likeCount     uint32
+	commentsCount uint32
 	caption       string
 	permalink     string
 	postedAt      time.Time
 }
 
 func NewPost(
-	id int,
+	id uint64,
 	title string,
-	likeCount int,
-	commentsCount int,
+	likeCount uint32,
+	commentsCount uint32,
 	caption string,
 	permalink string,
 	postedAt time.Time,
@@ -32,7 +34,7 @@ func NewPost(
 	}
 }
 
-func (p *Post) GetId() int {
+func (p *Post) GetId() uint64 {
 	return p.id
 }
 
@@ -40,11 +42,11 @@ func (p *Post) GetTitle() string {
 	return p.title
 }
 
-func (p *Post) GetLikeCount() int {
+func (p *Post) GetLikeCount() uint32 {
 	return p.likeCount
 }
 
-func (p *Post) GetCommentsCount() int {
+func (p *Post) GetCommentsCount() uint32 {
 	return p.commentsCount
 }
 

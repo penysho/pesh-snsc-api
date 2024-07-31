@@ -30,7 +30,7 @@ func NewPostRepository(
 }
 
 // FindByID IDで投稿情報を取得する
-func (r *postRepositoryImpl) FindByID(id int) (*post.Post, error) {
+func (r *postRepositoryImpl) FindByID(id uint64) (*post.Post, error) {
 	tran := r.dbTxManeger.GetTx()
 
 	postModel, err := models.Posts(
@@ -42,10 +42,10 @@ func (r *postRepositoryImpl) FindByID(id int) (*post.Post, error) {
 	}
 
 	return post.NewPost(
-		int(postModel.ID),
+		uint64(postModel.ID),
 		postModel.Title.String,
-		postModel.LikeCount.Int,
-		postModel.CommentsCount.Int,
+		uint32(postModel.LikeCount.Int),
+		uint32(postModel.CommentsCount.Int),
 		postModel.Caption.String,
 		postModel.Permalink,
 		postModel.PostedAt,

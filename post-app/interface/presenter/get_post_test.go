@@ -25,7 +25,7 @@ func Test_postPresenterImpl_PresentGetPost(t *testing.T) {
 			name: "適切なステータスコードでレスポンスされる",
 			args: args{
 				post: post.NewPost(
-					int(10000),
+					uint64(10000),
 					"title",
 					1,
 					1,

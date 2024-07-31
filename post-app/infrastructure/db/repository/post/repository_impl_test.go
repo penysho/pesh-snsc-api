@@ -53,7 +53,7 @@ func Test_postRepositoryImpl_FindByID(t *testing.T) {
 		dbTxManeger *db.DBTxManeger
 	}
 	type args struct {
-		id int
+		id uint64
 	}
 	tests := []struct {
 		name      string
@@ -112,7 +112,7 @@ func createPostEntities(size int) []*post.Post {
 	postEntities := make([]*post.Post, 0, size)
 	for i := 0; i < size; i++ {
 		postEntity := post.NewPost(
-			int(10000+i),
+			uint64(10000+i),
 			"title",
 			1,
 			1,
@@ -136,10 +136,10 @@ func bulkInsertPost(t *testing.T, ctx context.Context, dbTxManeger *db.DBTxManeg
 			ID:    int64(postEntity.GetId()),
 			Title: null.StringFrom(postEntity.GetTitle()),
 			LikeCount: null.IntFrom(
-				postEntity.GetLikeCount(),
+				int(postEntity.GetLikeCount()),
 			),
 			CommentsCount: null.IntFrom(
-				postEntity.GetCommentsCount(),
+				int(postEntity.GetCommentsCount()),
 			),
 			Caption:   null.StringFrom(postEntity.GetCaption()),
 			Permalink: postEntity.GetPermalink(),

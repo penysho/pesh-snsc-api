@@ -27,13 +27,13 @@ type Post struct {
 	Caption string `json:"caption"`
 
 	// CommentsCount コメント数
-	CommentsCount int `json:"commentsCount"`
+	CommentsCount uint32 `json:"commentsCount"`
 
 	// Id 投稿ID
-	Id int `json:"id"`
+	Id uint64 `json:"id"`
 
 	// LikeCount いいね数
-	LikeCount int `json:"likeCount"`
+	LikeCount uint32 `json:"likeCount"`
 
 	// Permalink https://example.com/000POSTID001
 	Permalink string `json:"permalink"`

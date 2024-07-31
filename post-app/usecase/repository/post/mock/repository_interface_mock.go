@@ -40,7 +40,7 @@ func (m *MockPostRepository) EXPECT() *MockPostRepositoryMockRecorder {
 }
 
 // FindByID mocks base method.
-func (m *MockPostRepository) FindByID(id int) (*post.Post, error) {
+func (m *MockPostRepository) FindByID(id uint64) (*post.Post, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindByID", id)
 	ret0, _ := ret[0].(*post.Post)

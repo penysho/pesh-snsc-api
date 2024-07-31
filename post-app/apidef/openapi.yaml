@@ -48,6 +48,7 @@ components:
           type: integer
           description: 投稿ID
           example: 000POSTID001
+          x-go-type: uint64
         title:
           type: string
           description: 投稿タイトル
@@ -56,10 +57,12 @@ components:
           type: integer
           description: いいね数
           example: 100
+          x-go-type: uint32
         commentsCount:
           type: integer
           description: コメント数
           example: 100
+          x-go-type: uint32
         caption:
           type: string
           description: 投稿詳細文

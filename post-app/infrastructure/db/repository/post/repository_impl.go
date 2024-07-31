@@ -43,10 +43,10 @@ func (r *postRepositoryImpl) FindByID(id uint64) (*post.Post, error) {
 
 	return post.NewPost(
 		uint64(postModel.ID),
-		postModel.Title.String,
-		uint32(postModel.LikeCount.Int),
-		uint32(postModel.CommentsCount.Int),
-		postModel.Caption.String,
+		postModel.Title,
+		uint32(postModel.LikeCount),
+		uint32(postModel.CommentsCount),
+		postModel.Caption,
 		postModel.Permalink,
 		postModel.PostedAt,
 	), nil

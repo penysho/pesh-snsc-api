@@ -14,7 +14,6 @@ import (
 	"time"
 
 	"github.com/friendsofgo/errors"
-	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
@@ -24,19 +23,19 @@ import (
 
 // Post is an object representing the database table.
 type Post struct {
-	ID            int64       `boil:"id" json:"id" toml:"id" yaml:"id"`
-	Title         null.String `boil:"title" json:"title,omitempty" toml:"title" yaml:"title,omitempty"`
-	LikeCount     null.Int    `boil:"like_count" json:"like_count,omitempty" toml:"like_count" yaml:"like_count,omitempty"`
-	CommentsCount null.Int    `boil:"comments_count" json:"comments_count,omitempty" toml:"comments_count" yaml:"comments_count,omitempty"`
-	Caption       null.String `boil:"caption" json:"caption,omitempty" toml:"caption" yaml:"caption,omitempty"`
-	Permalink     string      `boil:"permalink" json:"permalink" toml:"permalink" yaml:"permalink"`
-	PostedAt      time.Time   `boil:"posted_at" json:"posted_at" toml:"posted_at" yaml:"posted_at"`
-	IsActive      bool        `boil:"is_active" json:"is_active" toml:"is_active" yaml:"is_active"`
-	CreatedAt     time.Time   `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
-	UpdatedAt     time.Time   `boil:"updated_at" json:"updated_at" toml:"updated_at" yaml:"updated_at"`
-	SNSID         int64       `boil:"sns_id" json:"sns_id" toml:"sns_id" yaml:"sns_id"`
-	SNSPostID     string      `boil:"sns_post_id" json:"sns_post_id" toml:"sns_post_id" yaml:"sns_post_id"`
-	Status        string      `boil:"status" json:"status" toml:"status" yaml:"status"`
+	ID            int64     `boil:"id" json:"id" toml:"id" yaml:"id"`
+	Title         string    `boil:"title" json:"title" toml:"title" yaml:"title"`
+	LikeCount     int       `boil:"like_count" json:"like_count" toml:"like_count" yaml:"like_count"`
+	CommentsCount int       `boil:"comments_count" json:"comments_count" toml:"comments_count" yaml:"comments_count"`
+	Caption       string    `boil:"caption" json:"caption" toml:"caption" yaml:"caption"`
+	Permalink     string    `boil:"permalink" json:"permalink" toml:"permalink" yaml:"permalink"`
+	PostedAt      time.Time `boil:"posted_at" json:"posted_at" toml:"posted_at" yaml:"posted_at"`
+	IsActive      bool      `boil:"is_active" json:"is_active" toml:"is_active" yaml:"is_active"`
+	CreatedAt     time.Time `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
+	UpdatedAt     time.Time `boil:"updated_at" json:"updated_at" toml:"updated_at" yaml:"updated_at"`
+	SNSID         int64     `boil:"sns_id" json:"sns_id" toml:"sns_id" yaml:"sns_id"`
+	SNSPostID     string    `boil:"sns_post_id" json:"sns_post_id" toml:"sns_post_id" yaml:"sns_post_id"`
+	Status        string    `boil:"status" json:"status" toml:"status" yaml:"status"`
 
 	R *postR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L postL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -127,94 +126,6 @@ func (w whereHelperint64) NIN(slice []int64) qm.QueryMod {
 	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
 }
 
-type whereHelpernull_String struct{ field string }
-
-func (w whereHelpernull_String) EQ(x null.String) qm.QueryMod {
-	return qmhelper.WhereNullEQ(w.field, false, x)
-}
-func (w whereHelpernull_String) NEQ(x null.String) qm.QueryMod {
-	return qmhelper.WhereNullEQ(w.field, true, x)
-}
-func (w whereHelpernull_String) LT(x null.String) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LT, x)
-}
-func (w whereHelpernull_String) LTE(x null.String) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LTE, x)
-}
-func (w whereHelpernull_String) GT(x null.String) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GT, x)
-}
-func (w whereHelpernull_String) GTE(x null.String) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GTE, x)
-}
-func (w whereHelpernull_String) LIKE(x null.String) qm.QueryMod {
-	return qm.Where(w.field+" LIKE ?", x)
-}
-func (w whereHelpernull_String) NLIKE(x null.String) qm.QueryMod {
-	return qm.Where(w.field+" NOT LIKE ?", x)
-}
-func (w whereHelpernull_String) ILIKE(x null.String) qm.QueryMod {
-	return qm.Where(w.field+" ILIKE ?", x)
-}
-func (w whereHelpernull_String) NILIKE(x null.String) qm.QueryMod {
-	return qm.Where(w.field+" NOT ILIKE ?", x)
-}
-func (w whereHelpernull_String) IN(slice []string) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
-}
-func (w whereHelpernull_String) NIN(slice []string) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
-}
-
-func (w whereHelpernull_String) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
-func (w whereHelpernull_String) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
-
-type whereHelpernull_Int struct{ field string }
-
-func (w whereHelpernull_Int) EQ(x null.Int) qm.QueryMod {
-	return qmhelper.WhereNullEQ(w.field, false, x)
-}
-func (w whereHelpernull_Int) NEQ(x null.Int) qm.QueryMod {
-	return qmhelper.WhereNullEQ(w.field, true, x)
-}
-func (w whereHelpernull_Int) LT(x null.Int) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LT, x)
-}
-func (w whereHelpernull_Int) LTE(x null.Int) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LTE, x)
-}
-func (w whereHelpernull_Int) GT(x null.Int) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GT, x)
-}
-func (w whereHelpernull_Int) GTE(x null.Int) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GTE, x)
-}
-func (w whereHelpernull_Int) IN(slice []int) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
-}
-func (w whereHelpernull_Int) NIN(slice []int) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
-}
-
-func (w whereHelpernull_Int) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
-func (w whereHelpernull_Int) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
-
 type whereHelperstring struct{ field string }
 
 func (w whereHelperstring) EQ(x string) qm.QueryMod     { return qmhelper.Where(w.field, qmhelper.EQ, x) }
@@ -235,6 +146,29 @@ func (w whereHelperstring) IN(slice []string) qm.QueryMod {
 	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
 }
 func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
+}
+
+type whereHelperint struct{ field string }
+
+func (w whereHelperint) EQ(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperint) NEQ(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperint) LT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperint) LTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperint) GT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperint) GTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperint) IN(slice []int) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
+}
+func (w whereHelperint) NIN(slice []int) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
 		values = append(values, value)
@@ -274,10 +208,10 @@ func (w whereHelperbool) GTE(x bool) qm.QueryMod { return qmhelper.Where(w.field
 
 var PostWhere = struct {
 	ID            whereHelperint64
-	Title         whereHelpernull_String
-	LikeCount     whereHelpernull_Int
-	CommentsCount whereHelpernull_Int
-	Caption       whereHelpernull_String
+	Title         whereHelperstring
+	LikeCount     whereHelperint
+	CommentsCount whereHelperint
+	Caption       whereHelperstring
 	Permalink     whereHelperstring
 	PostedAt      whereHelpertime_Time
 	IsActive      whereHelperbool
@@ -288,10 +222,10 @@ var PostWhere = struct {
 	Status        whereHelperstring
 }{
 	ID:            whereHelperint64{field: "\"post\".\"id\""},
-	Title:         whereHelpernull_String{field: "\"post\".\"title\""},
-	LikeCount:     whereHelpernull_Int{field: "\"post\".\"like_count\""},
-	CommentsCount: whereHelpernull_Int{field: "\"post\".\"comments_count\""},
-	Caption:       whereHelpernull_String{field: "\"post\".\"caption\""},
+	Title:         whereHelperstring{field: "\"post\".\"title\""},
+	LikeCount:     whereHelperint{field: "\"post\".\"like_count\""},
+	CommentsCount: whereHelperint{field: "\"post\".\"comments_count\""},
+	Caption:       whereHelperstring{field: "\"post\".\"caption\""},
 	Permalink:     whereHelperstring{field: "\"post\".\"permalink\""},
 	PostedAt:      whereHelpertime_Time{field: "\"post\".\"posted_at\""},
 	IsActive:      whereHelperbool{field: "\"post\".\"is_active\""},
@@ -351,8 +285,8 @@ type postL struct{}
 
 var (
 	postAllColumns            = []string{"id", "title", "like_count", "comments_count", "caption", "permalink", "posted_at", "is_active", "created_at", "updated_at", "sns_id", "sns_post_id", "status"}
-	postColumnsWithoutDefault = []string{"permalink", "posted_at", "is_active", "created_at", "updated_at", "sns_id", "sns_post_id", "status"}
-	postColumnsWithDefault    = []string{"id", "title", "like_count", "comments_count", "caption"}
+	postColumnsWithoutDefault = []string{"title", "like_count", "comments_count", "caption", "permalink", "posted_at", "is_active", "created_at", "updated_at", "sns_id", "sns_post_id", "status"}
+	postColumnsWithDefault    = []string{"id"}
 	postPrimaryKeyColumns     = []string{"id"}
 	postGeneratedColumns      = []string{}
 )

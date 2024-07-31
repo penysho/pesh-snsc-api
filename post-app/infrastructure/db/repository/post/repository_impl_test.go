@@ -13,7 +13,6 @@ import (
 	postRepoImpl "github.com/penysho/pesh-snsc-api/post-app/infrastructure/db/repository/post"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 
@@ -133,17 +132,13 @@ func bulkInsertPost(t *testing.T, ctx context.Context, dbTxManeger *db.DBTxManeg
 
 	for _, postEntity := range postEntities {
 		postModel := models.Post{
-			ID:    int64(postEntity.GetId()),
-			Title: null.StringFrom(postEntity.GetTitle()),
-			LikeCount: null.IntFrom(
-				int(postEntity.GetLikeCount()),
-			),
-			CommentsCount: null.IntFrom(
-				int(postEntity.GetCommentsCount()),
-			),
-			Caption:   null.StringFrom(postEntity.GetCaption()),
-			Permalink: postEntity.GetPermalink(),
-			PostedAt:  postEntity.GetPostedAt(),
+			ID:            int64(postEntity.GetId()),
+			Title:         postEntity.GetTitle(),
+			LikeCount:     int(postEntity.GetLikeCount()),
+			CommentsCount: int(postEntity.GetCommentsCount()),
+			Caption:       postEntity.GetCaption(),
+			Permalink:     postEntity.GetPermalink(),
+			PostedAt:      postEntity.GetPostedAt(),
 		}
 
 		err := postModel.Insert(ctx, tran, boil.Infer())

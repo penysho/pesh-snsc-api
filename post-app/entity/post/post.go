@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+//go:generate accessor -type Post
 type Post struct {
 	id            uint64
 	title         string

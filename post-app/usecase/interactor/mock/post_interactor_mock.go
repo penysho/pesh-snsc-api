@@ -10,9 +10,9 @@
 package interactor_mock
 
 import (
+	context "context"
 	reflect "reflect"
 
-	gin "github.com/gin-gonic/gin"
 	presenter "github.com/penysho/pesh-snsc-api/post-app/interface/presenter"
 	gomock "go.uber.org/mock/gomock"
 )
@@ -41,7 +41,7 @@ func (m *MockPostInteractor) EXPECT() *MockPostInteractorMockRecorder {
 }
 
 // GetPost mocks base method.
-func (m *MockPostInteractor) GetPost(c *gin.Context, id uint64, outputBoundary presenter.PostPresenter) {
+func (m *MockPostInteractor) GetPost(c context.Context, id uint64, outputBoundary presenter.PostPresenter) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "GetPost", c, id, outputBoundary)
 }

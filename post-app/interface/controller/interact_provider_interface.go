@@ -1,12 +1,11 @@
 package controller
 
 import (
-	postInteractor "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post"
-
 	"github.com/gin-gonic/gin"
+	"github.com/penysho/pesh-snsc-api/post-app/usecase/interactor"
 )
 
-//go:generate mockgen -source=interact_provider_interface.go -destination=mock/interact_provider_interface_mock.go -package=controller_mock
+//go:generate mockgen -source=interact_provider_interface.go -destination=mock/interact_provider_mock.go -package=controller_mock
 type InteractProvider interface {
-	ProvidePostInteractor(c *gin.Context) postInteractor.PostInteractor
+	ProvidePostInteractor(c *gin.Context) interactor.PostInteractor
 }

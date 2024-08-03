@@ -1,4 +1,4 @@
-package interactor_test
+package post_test
 
 import (
 	"net/http"
@@ -10,7 +10,7 @@ import (
 	"github.com/penysho/pesh-snsc-api/post-app/entity/post"
 	presenter_mock "github.com/penysho/pesh-snsc-api/post-app/interface/presenter/mock"
 	interactor "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post"
-	post_mock "github.com/penysho/pesh-snsc-api/post-app/usecase/repository/post/mock"
+	post_mock "github.com/penysho/pesh-snsc-api/post-app/usecase/repository/mock"
 	"github.com/penysho/pesh-snsc-api/post-app/util/mock"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"

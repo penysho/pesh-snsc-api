@@ -2,7 +2,7 @@ package module
 
 import (
 	"github.com/penysho/pesh-snsc-api/post-app/interface/controller"
-	postInteractor "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post"
+	"github.com/penysho/pesh-snsc-api/post-app/usecase/interactor"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +14,6 @@ func NewInteractProvider() controller.InteractProvider {
 }
 
 // ProvidePostInteractor PostInteractorを提供する
-func (p *interactProviderImpl) ProvidePostInteractor(c *gin.Context) postInteractor.PostInteractor {
-	return c.MustGet("postInteractor").(postInteractor.PostInteractor)
+func (p *interactProviderImpl) ProvidePostInteractor(c *gin.Context) interactor.PostInteractor {
+	return c.MustGet("postInteractor").(interactor.PostInteractor)
 }

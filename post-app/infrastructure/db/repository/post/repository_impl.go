@@ -8,7 +8,7 @@ import (
 	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db"
 	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/db/repository/models"
 	"github.com/penysho/pesh-snsc-api/post-app/infrastructure/logger"
-	postRepo "github.com/penysho/pesh-snsc-api/post-app/usecase/repository/post"
+	"github.com/penysho/pesh-snsc-api/post-app/usecase/repository"
 )
 
 type postRepositoryImpl struct {
@@ -21,7 +21,7 @@ func NewPostRepository(
 	ctx context.Context,
 	dbManeger *db.DBManeger,
 	dbTxManeger *db.DBTxManeger,
-) postRepo.PostRepository {
+) repository.PostRepository {
 	return &postRepositoryImpl{
 		ctx:         ctx,
 		dbManeger:   dbManeger,

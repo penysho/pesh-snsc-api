@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	controller_mock "github.com/penysho/pesh-snsc-api/post-app/interface/controller/mock"
 	presenter_mock "github.com/penysho/pesh-snsc-api/post-app/interface/presenter/mock"
-	interactor_mock "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post/mock"
-	post_mock "github.com/penysho/pesh-snsc-api/post-app/usecase/repository/post/mock"
+	interactor_mock "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/mock"
+	post_mock "github.com/penysho/pesh-snsc-api/post-app/usecase/repository/mock"
 	"golang.org/x/exp/maps"
 )
 

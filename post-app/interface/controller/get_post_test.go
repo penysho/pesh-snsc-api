@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/penysho/pesh-snsc-api/post-app/interface/controller"
 	controller_mock "github.com/penysho/pesh-snsc-api/post-app/interface/controller/mock"
-	interactor_mock "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/post/mock"
+	interactor_mock "github.com/penysho/pesh-snsc-api/post-app/usecase/interactor/mock"
 	"github.com/penysho/pesh-snsc-api/post-app/util/mock"
 	"go.uber.org/mock/gomock"
 )

@@ -1,4 +1,4 @@
-package presenter
+package post
 
 import (
 	"net/http"
@@ -8,19 +8,14 @@ import (
 	"github.com/penysho/pesh-snsc-api/post-app/apidef/generated/server"
 	domainError "github.com/penysho/pesh-snsc-api/post-app/entity/error"
 	"github.com/penysho/pesh-snsc-api/post-app/entity/post"
+	"github.com/penysho/pesh-snsc-api/post-app/interface/presenter"
 )
-
-//go:generate mockgen -source=get_post.go -destination=mock/get_post_mock.go -package=presenter_mock
-type PostPresenter interface {
-	PresentGetPost(post *post.Post)
-	ErrorResponse(err error)
-}
 
 type postPresenterImpl struct {
 	context *gin.Context
 }
 
-func NewPostPresenter(c *gin.Context) PostPresenter {
+func NewPostPresenter(c *gin.Context) presenter.PostPresenter {
 	return &postPresenterImpl{
 		context: c,
 	}

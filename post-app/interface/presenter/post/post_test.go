@@ -1,4 +1,4 @@
-package presenter_test
+package post_test
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	domainError "github.com/penysho/pesh-snsc-api/post-app/entity/error"
 	"github.com/penysho/pesh-snsc-api/post-app/entity/post"
-	"github.com/penysho/pesh-snsc-api/post-app/interface/presenter"
+	presenter "github.com/penysho/pesh-snsc-api/post-app/interface/presenter/post"
 	"github.com/stretchr/testify/assert"
 )
 

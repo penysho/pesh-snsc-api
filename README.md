@@ -29,6 +29,10 @@
 
 本アプリケーションの実行方法を記載する
 
+### 前提
+
+* pesh-snscのDBが起動していること
+
 ### 手順
 
 * 各マイクロサービス配下に`.env.local.compose`を作成する、[環境変数一覧](#環境変数一覧)を参考にすること
@@ -37,7 +41,7 @@
 
 ### 環境変数一覧
 
-DBはpesh-snscで利用するDB(postgreSQL 16.2)を想定している
+* DBはpesh-snscで利用するPostgreSQLを想定
 
 | 変数名 | 説明 | デフォルト値 |
 | - | - | - |
@@ -48,10 +52,10 @@ DBはpesh-snscで利用するDB(postgreSQL 16.2)を想定している
 | DB_NAME | DB名 | |
 | DB_SSL_MODE | DBへの暗号化接続設定| false |
 | DB_TIMEOUT | DB接続開始時のタイムアウト時間(秒) | 10 |
-| DB_MAX_OPEN_CONNECTIONS | 最大コネクション数 | 10 |
-| DB_MIN_OPEN_CONNECTIONS | 最小コネクション数 | 5 |
-| DB_CONNECTION_MAX_LIFETIME | コネクションを利用可能な最長時間(秒) | 300 |
-| DB_CONNECTION_MAX_IDLE_TIME | コネクションがアイドル状態で保持される時間(秒)| 300 |
+| DB_MAX_OPEN_CONNECTIONS | DB最大コネクション数 | 10 |
+| DB_MIN_OPEN_CONNECTIONS | DB最小コネクション数 | 5 |
+| DB_CONNECTION_MAX_LIFETIME | DBコネクションを利用可能な最長時間(秒) | 300 |
+| DB_CONNECTION_MAX_IDLE_TIME | DBコネクションがアイドル状態で保持される時間(秒)| 300 |
 | APP_ADDRESS | マイクロサービスを起動するアドレス | 0.0.0.0 |
 | APP_PORT | マイクロサービスで使用するポート | 8081 |
 | APP_ENVIRONMENT | アプリケーションの実行環境(production, staging, development, localから設定) | local |

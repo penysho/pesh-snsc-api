@@ -81,9 +81,9 @@ components:
       type: object
       description: エラーレスポンス
       required:
-        - errors
+        - message
       properties:
-        errors:
+        message:
           type: string
           example: Error Messages
 

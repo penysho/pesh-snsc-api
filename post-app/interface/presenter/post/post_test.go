@@ -53,30 +53,34 @@ func Test_postPresenterImpl_ErrorResponse(t *testing.T) {
 		err error
 	}
 	tests := []struct {
-		name           string
-		args           args
-		wantStatusCode int
+		name       string
+		args       args
+		statusCode int
+		message    presenter.PostErrorMessage
 	}{
 		{
 			name: "NotFoundが返却される",
 			args: args{
 				err: domainError.NotFound,
 			},
-			wantStatusCode: http.StatusNotFound,
+			statusCode: http.StatusNotFound,
+			message:    presenter.PostNotFound,
 		},
 		{
 			name: "BadRequestが返却される",
 			args: args{
 				err: domainError.InvalidInput,
 			},
-			wantStatusCode: http.StatusBadRequest,
+			statusCode: http.StatusBadRequest,
+			message:    presenter.InvalidInput,
 		},
 		{
 			name: "InternalServerErrorが返却される",
 			args: args{
 				err: domainError.SystemError,
 			},
-			wantStatusCode: http.StatusInternalServerError,
+			statusCode: http.StatusInternalServerError,
+			message:    presenter.InternalServerError,
 		},
 	}
 	for _, tt := range tests {
@@ -86,7 +90,8 @@ func Test_postPresenterImpl_ErrorResponse(t *testing.T) {
 
 			p := presenter.NewPostPresenter(c)
 			p.ErrorResponse(tt.args.err)
-			assert.Equal(t, tt.wantStatusCode, w.Result().StatusCode)
+			assert.Equal(t, tt.statusCode, w.Result().StatusCode)
+			assert.Contains(t, w.Body.String(), tt.message)
 		})
 	}
 }

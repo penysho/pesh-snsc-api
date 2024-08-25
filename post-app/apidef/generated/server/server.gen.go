@@ -14,7 +14,7 @@ import (
 
 // DomainError エラーレスポンス
 type DomainError struct {
-	Errors string `json:"errors"`
+	Message string `json:"message"`
 }
 
 // Post 投稿情報

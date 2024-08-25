@@ -36,22 +36,32 @@ func (p *postPresenterImpl) PresentGetPost(post *post.Post) {
 	})
 }
 
+type PostErrorMessage = string
+
+const (
+	PostNotFound        PostErrorMessage = "Post not found"
+	InvalidInput        PostErrorMessage = "Invalid input"
+	InternalServerError PostErrorMessage = "Internal server error"
+)
+
 // ErrorResponse エラーレスポンスを返却する
 func (p *postPresenterImpl) ErrorResponse(err error) {
 	var status int
-	var message string
+	var message PostErrorMessage
 
 	switch err {
 	case domainError.NotFound:
 		status = http.StatusNotFound
-		message = "Post not found"
+		message = PostNotFound
 	case domainError.InvalidInput:
 		status = http.StatusBadRequest
-		message = "Invalid input"
+		message = InvalidInput
 	default:
 		status = http.StatusInternalServerError
-		message = "Internal server error"
+		message = InternalServerError
 	}
 
-	p.context.JSON(status, gin.H{"errors": message})
+	p.context.JSON(status, server.DomainError{
+		Message: message,
+	})
 }

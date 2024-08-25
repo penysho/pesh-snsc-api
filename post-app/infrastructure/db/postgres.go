@@ -48,7 +48,7 @@ func (p *PostgresDB) InitDB(dbConfig *config.DBConfig) (*sql.DB, error) {
 
 	// https://pkg.go.dev/database/sql#DB.SetConnMaxIdleTime
 	// https://please-sleep.cou929.nu/go-sql-db-connection-pool.html
-	db.SetMaxOpenConns(int(dbConfig.MaxConnections))                                   // 同時に使用できる最大コネクション数
+	db.SetMaxOpenConns(int(dbConfig.MaxConnections))                                   // 同時に使用可能な最大コネクション数
 	db.SetMaxIdleConns(int(dbConfig.MinConnections))                                   // コネクションプール内に保持する最大アイドルコネクション数
 	db.SetConnMaxLifetime(time.Duration(dbConfig.ConnectionMaxLifetime) * time.Second) // コネクションを利用可能な最長時間
 	db.SetConnMaxIdleTime(time.Duration(dbConfig.ConnectionMaxIdletime) * time.Second) // コネクションがアイドル状態で保持される時間

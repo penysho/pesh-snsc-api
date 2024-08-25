@@ -22,7 +22,7 @@ type Config struct {
 
 type AppConfig struct {
 	AppHost        string         `env:"HOST" envDefault:"0.0.0.0"`
-	AppPort        uint           `env:"PORT" envDefault:"8000"`
+	AppPort        uint           `env:"PORT" envDefault:"8081"`
 	AppEnvironment AppEnvironment `env:"ENVIRONMENT" envDefault:"local"`
 }
 

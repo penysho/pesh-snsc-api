@@ -109,7 +109,7 @@ components:
             $ref: "#/components/schemas/DomainError"
 
     InternalServerError:
-      description: 400番台エラーレスポンス
+      description: 500番台エラーレスポンス
       content:
         application/json:
           schema:

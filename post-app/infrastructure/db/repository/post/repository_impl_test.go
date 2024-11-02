@@ -70,7 +70,7 @@ func Test_postRepositoryImpl_FindByID(t *testing.T) {
 				dbTxManeger: dbTxManeger,
 			},
 			args: args{
-				id: posts[0].GetId(),
+				id: posts[0].Id(),
 			},
 			want:      posts[0],
 			assertion: assert.NoError,
@@ -101,7 +101,7 @@ func Test_postRepositoryImpl_FindByID(t *testing.T) {
 
 			tt.assertion(t, err)
 			if tt.want != nil {
-				assert.Equal(t, tt.want.GetId(), got.GetId())
+				assert.Equal(t, tt.want.Id(), got.Id())
 			}
 		})
 	}
@@ -132,13 +132,13 @@ func bulkInsertPost(t *testing.T, ctx context.Context, dbTxManeger *db.DBTxManeg
 
 	for _, postEntity := range postEntities {
 		postModel := models.Post{
-			ID:            int64(postEntity.GetId()),
-			Title:         postEntity.GetTitle(),
-			LikeCount:     int(postEntity.GetLikeCount()),
-			CommentsCount: int(postEntity.GetCommentsCount()),
-			Caption:       postEntity.GetCaption(),
-			Permalink:     postEntity.GetPermalink(),
-			PostedAt:      postEntity.GetPostedAt(),
+			ID:            int64(postEntity.Id()),
+			Title:         postEntity.Title(),
+			LikeCount:     int(postEntity.LikeCount()),
+			CommentsCount: int(postEntity.CommentsCount()),
+			Caption:       postEntity.Caption(),
+			Permalink:     postEntity.Permalink(),
+			PostedAt:      postEntity.PostedAt(),
 		}
 
 		err := postModel.Insert(ctx, tran, boil.Infer())

@@ -13,6 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
+	post "github.com/penysho/pesh-snsc-api/post-app/entity/post"
 	presenter "github.com/penysho/pesh-snsc-api/post-app/interface/presenter"
 	gomock "go.uber.org/mock/gomock"
 )
@@ -21,6 +22,7 @@ import (
 type MockPostInteractor struct {
 	ctrl     *gomock.Controller
 	recorder *MockPostInteractorMockRecorder
+	isgomock struct{}
 }
 
 // MockPostInteractorMockRecorder is the mock recorder for MockPostInteractor.
@@ -41,7 +43,7 @@ func (m *MockPostInteractor) EXPECT() *MockPostInteractorMockRecorder {
 }
 
 // GetPost mocks base method.
-func (m *MockPostInteractor) GetPost(c context.Context, id uint64, outputBoundary presenter.PostPresenter) {
+func (m *MockPostInteractor) GetPost(c context.Context, id post.ID, outputBoundary presenter.PostPresenter) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "GetPost", c, id, outputBoundary)
 }

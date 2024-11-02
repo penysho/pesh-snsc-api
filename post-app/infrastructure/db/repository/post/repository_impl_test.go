@@ -52,7 +52,7 @@ func Test_postRepositoryImpl_FindByID(t *testing.T) {
 		dbTxManeger *db.DBTxManeger
 	}
 	type args struct {
-		id uint64
+		id post.ID
 	}
 	tests := []struct {
 		name      string
@@ -111,7 +111,7 @@ func createPostEntities(size int) []*post.Post {
 	postEntities := make([]*post.Post, 0, size)
 	for i := 0; i < size; i++ {
 		postEntity := post.NewPost(
-			uint64(10000+i),
+			post.ID(10000+i),
 			"title",
 			1,
 			1,

@@ -20,6 +20,7 @@ import (
 type MockPostRepository struct {
 	ctrl     *gomock.Controller
 	recorder *MockPostRepositoryMockRecorder
+	isgomock struct{}
 }
 
 // MockPostRepositoryMockRecorder is the mock recorder for MockPostRepository.
@@ -40,7 +41,7 @@ func (m *MockPostRepository) EXPECT() *MockPostRepositoryMockRecorder {
 }
 
 // FindByID mocks base method.
-func (m *MockPostRepository) FindByID(id uint64) (*post.Post, error) {
+func (m *MockPostRepository) FindByID(id post.ID) (*post.Post, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindByID", id)
 	ret0, _ := ret[0].(*post.Post)

@@ -4,9 +4,11 @@ import (
 	"time"
 )
 
+type ID = uint64
+
 //go:generate accessor -type Post
 type Post struct {
-	id            uint64
+	id            ID
 	title         string
 	likeCount     uint32
 	commentsCount uint32
@@ -16,7 +18,7 @@ type Post struct {
 }
 
 func NewPost(
-	id uint64,
+	id ID,
 	title string,
 	likeCount uint32,
 	commentsCount uint32,
@@ -33,32 +35,4 @@ func NewPost(
 		permalink:     permalink,
 		postedAt:      postedAt,
 	}
-}
-
-func (p *Post) GetId() uint64 {
-	return p.id
-}
-
-func (p *Post) GetTitle() string {
-	return p.title
-}
-
-func (p *Post) GetLikeCount() uint32 {
-	return p.likeCount
-}
-
-func (p *Post) GetCommentsCount() uint32 {
-	return p.commentsCount
-}
-
-func (p *Post) GetCaption() string {
-	return p.caption
-}
-
-func (p *Post) GetPermalink() string {
-	return p.permalink
-}
-
-func (p *Post) GetPostedAt() time.Time {
-	return p.postedAt
 }

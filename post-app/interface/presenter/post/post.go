@@ -25,13 +25,13 @@ func NewPostPresenter(c *gin.Context) presenter.PostPresenter {
 func (p *postPresenterImpl) PresentGetPost(post *post.Post) {
 	p.context.JSON(http.StatusOK, &server.GetPostResponse{
 		Post: server.Post{
-			Id:            post.GetId(),
-			Title:         post.GetTitle(),
-			LikeCount:     post.GetLikeCount(),
-			CommentsCount: post.GetCommentsCount(),
-			Caption:       post.GetCaption(),
-			Permalink:     post.GetPermalink(),
-			PostedAt:      post.GetPostedAt(),
+			Id:            post.Id(),
+			Title:         post.Title(),
+			LikeCount:     post.LikeCount(),
+			CommentsCount: post.CommentsCount(),
+			Caption:       post.Caption(),
+			Permalink:     post.Permalink(),
+			PostedAt:      post.PostedAt(),
 		},
 	})
 }

@@ -20,7 +20,8 @@ RUN apt-get update && apt-get upgrade -y \
     && go install github.com/go-delve/delve/cmd/dlv@latest \
     && go install honnef.co/go/tools/cmd/staticcheck@latest \
     && go install github.com/mizkei/accessor@latest \
-    && go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest
+    && go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest \
+    && go install go.uber.org/mock/mockgen@latest
 
 ENV LC_ALL ja_JP.UTF-8
 ENV TZ Asia/Tokyo

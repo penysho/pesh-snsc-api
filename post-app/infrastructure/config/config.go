@@ -50,7 +50,7 @@ type DBConfig struct {
 func NewAppConfig() (*AppConfig, error) {
 	cfg := Config{}
 	if err := env.Parse(&cfg); err != nil {
-		logger.Error("アプリケーション設定の読み込みに失敗しました", "err", err)
+		logger.Error("アプリケーション設定の読み込みに失敗しました", logger.Var("err", err))
 		return nil, err
 	}
 	return &cfg.App, nil
@@ -60,7 +60,7 @@ func NewAppConfig() (*AppConfig, error) {
 func NewDBConfig() (*DBConfig, error) {
 	cfg := Config{}
 	if err := env.Parse(&cfg); err != nil {
-		logger.Error("DB設定の読み込みに失敗しました", "err", err)
+		logger.Error("DB設定の読み込みに失敗しました", logger.Var("err", err))
 		return nil, err
 	}
 	return &cfg.DB, nil

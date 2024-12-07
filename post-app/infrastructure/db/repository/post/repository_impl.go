@@ -37,7 +37,7 @@ func (r *postRepositoryImpl) FindByID(id post.ID) (*post.Post, error) {
 		models.PostWhere.ID.EQ(int64(id)),
 	).One(r.ctx, tran)
 	if err != nil {
-		logger.Error("投稿情報が見つかりません", "id", id)
+		logger.Error("投稿情報が見つかりません", logger.Var("id", id))
 		return nil, domainError.NotFound
 	}
 

@@ -1,30 +1,67 @@
 package logger
 
 import (
+	"context"
 	"log/slog"
 	"os"
 )
 
-var (
-	logger = NewSlogLogger()
+var _logger *slog.Logger
+var _options *slog.HandlerOptions
+
+type LogLevel slog.Level
+
+const (
+	LevelDebug LogLevel = -4
+	LevelInfo  LogLevel = 0
+	LevelWarn  LogLevel = 4
+	LevelError LogLevel = 8
 )
 
-func NewSlogLogger() *slog.Logger {
-	return slog.New(slog.NewJSONHandler(os.Stdout, nil))
+type LogValue struct {
+	Key   string
+	Value any
 }
 
-func Debug(msg string, args ...any) {
-	logger.Debug(msg, args...)
+func Var(key string, value any) LogValue {
+	return LogValue{Key: key, Value: value}
 }
 
-func Info(msg string, args ...any) {
-	logger.Info(msg, args...)
+func InitLogger() {
+	_logger = slog.New(slog.NewJSONHandler(os.Stdout, _options))
 }
 
-func Warn(msg string, args ...any) {
-	logger.Warn(msg, args...)
+func InitLoggerWithLevel(level LogLevel) {
+	_options = &slog.HandlerOptions{Level: slog.Level(level)}
 }
 
-func Error(msg string, args ...any) {
-	logger.Error(msg, args...)
+func convertSlogArgs(args ...LogValue) []slog.Attr {
+	slogArgs := make([]slog.Attr, len(args))
+	for i, arg := range args {
+		slogArgs[i] = slog.Any(arg.Key, arg.Value)
+	}
+	return slogArgs
+}
+
+func logger() *slog.Logger {
+	if _logger == nil {
+		InitLogger()
+	}
+	return _logger
+}
+
+func Debug(msg string, args ...LogValue) {
+	logger().LogAttrs(context.Background(), slog.LevelDebug, msg, convertSlogArgs(args...)...)
+}
+
+func Info(msg string, args ...LogValue) {
+	logger().LogAttrs(context.Background(), slog.LevelInfo, msg, convertSlogArgs(args...)...)
+}
+
+func Warn(msg string, args ...LogValue) {
+	logger().LogAttrs(context.Background(), slog.LevelWarn, msg, convertSlogArgs(args...)...)
+}
+
+func Error(msg string, args ...LogValue) {
+	logger().LogAttrs(context.Background(), slog.LevelError, msg, convertSlogArgs(args...)...)
 }

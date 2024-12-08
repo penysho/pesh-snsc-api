@@ -24,7 +24,7 @@ type DBManeger struct {
 func NewDBManeger(db DB, dbConfig *config.DBConfig) (*DBManeger, error) {
 	pool, err := db.InitDB(dbConfig)
 	if err != nil {
-		logger.Error("DBの初期化に失敗しました", "err", err)
+		logger.Error("DBの初期化に失敗しました", logger.Var("err", err))
 		return nil, err
 	}
 	return &DBManeger{
@@ -75,21 +75,17 @@ func NewDBTxManegerWithPool(
 ) (*DBTxManeger, error) {
 	logger.Info(
 		"DBのトランザクションを開始します",
-		"MaxOpenConnections",
-		pool.Stats().MaxOpenConnections,
-		"OpenConnections",
-		pool.Stats().OpenConnections,
-		"InUse",
-		pool.Stats().InUse,
-		"Idle",
-		pool.Stats().Idle,
+		logger.Var("MaxOpenConnections", pool.Stats().MaxOpenConnections),
+		logger.Var("OpenConnections", pool.Stats().OpenConnections),
+		logger.Var("InUse", pool.Stats().InUse),
+		logger.Var("Idle", pool.Stats().Idle),
 	)
 	transaction, err := pool.BeginTx(
 		ctx,
 		&txOptions,
 	)
 	if err != nil {
-		logger.Error("DBのトランザクションの開始に失敗しました", "err", err)
+		logger.Error("DBのトランザクションの開始に失敗しました", logger.Var("err", err))
 		return nil, err
 	}
 	return &DBTxManeger{
